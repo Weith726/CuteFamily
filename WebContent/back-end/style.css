@@ -44,16 +44,7 @@
 
 
 
-   /*導覽列標題*/
 
-   .navbarTitle{ 
-     font-family: 'Noto Sans TC', sans-serif;
-
-     /*  margin-left:-140px; */
-     font-size: 34px;
-
-
-   }
    /*會員登入後照片*/
    .mem-pic{ 
      width: 45px;
@@ -218,13 +209,14 @@
      font-family: 'Noto Sans TC', sans-serif;
      padding:20px 10px 20px 10px; 
      float: left;
-     min-height: 100%;
+     min-height: 800px;
      background:rgba(255,255,255,0.95);
      text-align: left;   
-     border-radius: 5px;
-     margin-top: 5px;
-     margin-bottom: 105px;
-     right: 5px;
+     border-radius: 7px;
+     margin-top: 8px;
+     margin-bottom: 8px;
+     right: 8px;
+
 
      
 
@@ -233,58 +225,17 @@
 
    }
 
+ @media (max-width: 1800px){
 
-   /*歡迎畫面文字*/
-   .main h1{
-    margin-top: 40px; 
-    text-align: center;
-    font-size: 60px;    
-    font-family: 'Arial Black';
+
+   div.aside{
+    min-width:16%;
+
+
   }
-
-
-  /*表格樣式*/
-  table { 
-   width: 90%;
-   background-color: white;
-   margin-top: 5px;
-   margin-bottom: 5px;
+}
    
 
-
- }
- table, th, td {
-   border: 1px solid #CCCCFF;
-   border-left: 0px;
-   border-right: 0px;
-   text-align: center;
- }
-
- th{
-   padding: 5px;
-   background-color: lightcoral;
-
-
- }
-
- th, td {
-   padding: 5px;
-
- }
-
- /*頁尾*/
- footer{ 
-   float: left;
-   height:100px;
-   width: 100%;
-   background-color: #494646;
-   color: grey;
-   text-align: center;
-   padding-top:40px;
-   position: absolute;
-   bottom: 0;
-
- }
 
  /*以下為RWD配置*/
 
@@ -314,10 +265,6 @@
 @media (max-width: 661px){
 
 
- .navbarTitle{
-  display: none;
-
-}
 
 
 }

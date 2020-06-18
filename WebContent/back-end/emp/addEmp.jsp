@@ -9,8 +9,7 @@
 
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>員工資料新增 - addEmp.jsp</title>
+<%@ include file="../head.jsp"%>
 
 <%
 	// 	String empGender = null;
@@ -27,7 +26,7 @@
 table {
 width:100%;
 
-	background-color: white;
+
 	margin-top: 5px;
 	margin-bottom: 5px;
 	border: 7px solid;
@@ -63,7 +62,11 @@ th, td {
 </style>
 
 </head>
-<body bgcolor='white'>
+
+
+<body>
+
+<%@ include file="../header.jsp"%>
 
 	<span class="mainTitle">員工資料新增</span>
 
@@ -184,6 +187,8 @@ th, td {
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">
 	</FORM>
+	
+	<%@ include file="../footer.jsp"%>
 </body>
 
 

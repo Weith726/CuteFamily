@@ -14,10 +14,8 @@
 
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<%@ include file="../head.jsp"%>
 
-<style>
-</style>
 
 <style>
 table {
@@ -57,28 +55,31 @@ th, td {
 	border: 2px solid lightcoral;
 }
 
-img{
-max-width:220px;
-
+img {
+	max-width: 100px;
 }
 
-.addEmpBtn{
-	margin-left:50px;
+.addEmpBtn {
+float:right;
 	font-size: 22px;
- 	padding: 5px 20px;
- 	background-color: #e7e7e7; 
- 	color: black;
+	padding: 5px 20px;
+	background-color: #e7e7e7;
+	color: black;
+	margin-bottom:20px;
 }
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-	<span class="mainTitle">員工管理</span>
 
-<!-- 	<a href="select_page.jsp">回首頁</a> -->
+	<%@ include file="../header.jsp"%>
 
-	<input class="addEmpBtn" type="button" value="新增員工" onclick="location.href='addEmp.jsp'">
+	<span class="mainTitle">員工帳號管理</span>
+
+	<!-- 	<a href="select_page.jsp">回首頁</a> -->
+
+	
 
 
 
@@ -114,7 +115,10 @@ max-width:220px;
 			<th>刪除</th>
 
 		</tr>
+		
 		<%@ include file="page1.file"%>
+		<input class="addEmpBtn" type="button" value="新增員工"
+		onclick="location.href='addEmp.jsp'">
 		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -137,7 +141,7 @@ max-width:220px;
 					src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVO.empID}"></td>
 				<td>${empVO.hiredate}</td>
 				<td>${empVO.quitdate}</td>
- 				<td>${(empVO.empStatus =='1')?'在職中':(empVO.empStatus =='2')?'休假中':'已離職'}</td> 		
+				<td>${(empVO.empStatus =='1')?'在職中':(empVO.empStatus =='2')?'休假中':'已離職'}</td>
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"
@@ -163,6 +167,8 @@ max-width:220px;
 		</c:forEach>
 	</table>
 	<%@ include file="page2.file"%>
+
+	<%@ include file="../footer.jsp"%>
 
 </body>
 </html>
