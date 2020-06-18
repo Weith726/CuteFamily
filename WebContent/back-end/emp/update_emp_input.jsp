@@ -136,8 +136,8 @@ th, td {
 
 			<tr>
 				<th>離職日</th>
-				<td><input name="quitdate" id="f_date3" type="text"
-					value="<%=empVO.getQuitdate()%>" /></td>
+				<td><input name="quitdate" id="f_date3" type="text" autocomplete="off"
+					value="<%=(empVO.getQuitdate()==null)?"" : empVO.getQuitdate()%>" /></td>
 			</tr>
 
 
@@ -286,8 +286,7 @@ $('#f_date3').datetimepicker({
    theme: '',              //theme: 'dark',
    timepicker:false,       //timepicker:true,
    step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-   format:'Y-m-d',         //format:'Y-m-d H:i:s',
-   value: '<%=quitdate%>', // value:   new Date(),
+   format:'Y-m-d'         //format:'Y-m-d H:i:s',
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前

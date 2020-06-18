@@ -123,7 +123,8 @@ th, td {
 
 			<tr>
 				<th>生日</th>
-				<td><input name="empBirth" id="f_date1" type="text"></td>
+				<td><input name="empBirth" id="f_date1" type="text" autocomplete="off" 
+				value="<%=(empVO == null) ? "" : ((empVO.getEmpBirth() == null) ? "" : empVO.getEmpBirth())%>" /></td>
 			</tr>
 
 			<tr>
@@ -193,7 +194,7 @@ th, td {
 	try {
 		empBirth = empVO.getEmpBirth(); //非空值存到hiredate
 	} catch (Exception e) {
-		empBirth = java.sql.Date.valueOf("1980-01-01"); //空值給今天日期
+		empBirth = null; //空值給null
 
 	}
 %>
@@ -261,9 +262,8 @@ $(function (){
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',          //format:'Y-m-d H:i:s',
-	       value: '<%=empBirth%>' 
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '1980/01/01',  // 起始日
+           startDate:	            '1980/01/01',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });

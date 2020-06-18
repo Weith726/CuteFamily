@@ -302,9 +302,9 @@ public class EmpServlet extends HttpServlet {
 					//將前端日期字串轉成JAVA Date物件
 					empBirth = java.sql.Date.valueOf(req.getParameter("empBirth").trim());
 				} catch (IllegalArgumentException e) {
-					//例外把日期設為1980-01-01
-					empBirth = java.sql.Date.valueOf("1980-01-01");
-					errorMsgs.add("請輸入日期!");
+					//例外把日期設為null
+					empBirth = null;
+					errorMsgs.add("請輸入生日");
 				}
 				
 				
@@ -353,7 +353,7 @@ public class EmpServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					//例外把日期設為今天日期
 					hiredate=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
+					errorMsgs.add("請輸入到職日!");
 				}
 				
 				java.sql.Date quitdate = null;

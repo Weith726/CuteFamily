@@ -63,6 +63,11 @@ th, td {
 .mainTitlehr {
 	border: 2px solid lightcoral;
 }
+
+img{
+max-width:220px;
+
+}
 </style>
 
 </head>
