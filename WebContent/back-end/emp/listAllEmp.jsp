@@ -61,14 +61,26 @@ img{
 max-width:220px;
 
 }
+
+.addEmpBtn{
+	margin-left:50px;
+	font-size: 22px;
+ 	padding: 5px 20px;
+ 	background-color: #e7e7e7; 
+ 	color: black;
+}
 </style>
 
 </head>
 <body bgcolor='white'>
 
-	<span class="mainTitle">全部員工資料</span>
+	<span class="mainTitle">員工管理</span>
 
-	<a href="select_page.jsp">回首頁</a>
+<!-- 	<a href="select_page.jsp">回首頁</a> -->
+
+	<input class="addEmpBtn" type="button" value="新增員工" onclick="location.href='addEmp.jsp'">
+
+
 
 	<hr class="mainTitlehr">
 
@@ -125,7 +137,7 @@ max-width:220px;
 					src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVO.empID}"></td>
 				<td>${empVO.hiredate}</td>
 				<td>${empVO.quitdate}</td>
-				<td>${empVO.empStatus}</td>
+ 				<td>${(empVO.empStatus =='1')?'在職中':(empVO.empStatus =='2')?'休假中':'已離職'}</td> 		
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"

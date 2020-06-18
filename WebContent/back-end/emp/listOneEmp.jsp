@@ -5,6 +5,8 @@
 
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	
+	
 %>
 
 <html>
@@ -76,13 +78,12 @@ max-width:220px;
 
 	<span class="mainTitle">員工資料</span>
 
-	<a href="select_page.jsp">回首頁</a>
 
 	<hr class="mainTitlehr">
 
 	<table>
 		<tr>
-			<th>員工編號</th>
+<!-- 			<th>員工編號</th> -->
 			<th>員工姓名</th>
 			<th>性別</th>
 			<th>生日</th>
@@ -99,7 +100,7 @@ max-width:220px;
 			<th>刪除</th>
 		</tr>
 		<tr>
-			<td>${empVO.empID}</td>
+<%-- 			<td>${empVO.empID}</td> --%>
 			<td>${empVO.empName}</td>
 			<td>${empVO.empGender}</td>
 			
@@ -140,6 +141,9 @@ max-width:220px;
 			
 		</tr>
 	</table>
+	
+		<input class="addEmpBtn" type="button" value="返回員工管理" onclick="location.href='listAllEmp.jsp'">
 
 </body>
 </html>
+

@@ -54,7 +54,7 @@ th, td {
 
 	<span class="mainTitle">員工資料修改</span>
 
-	<a href="select_page.jsp">回首頁</a>
+	<a href="listAllEmp.jsp">返回員工資料</a>
 
 	<hr class="mainTitlehr">
 
@@ -72,10 +72,25 @@ th, td {
 	<FORM METHOD="post" ACTION="emp.do" name="form1"
 		enctype="multipart/form-data">
 		<table>
+
+		
 			<tr>
 				<th>員工編號<font color=red><b>*</b></font></th>
 				<td><%=empVO.getEmpID()%></td>
 			</tr>
+			
+			<tr>
+				<th>帳號</th>
+				<td><input type="Email" name="empAcc" size="20"
+					value="<%=empVO.getEmpAcc()%>" /></td>
+			</tr>
+
+			<tr>
+				<th>密碼:</th>
+				<td><input type="password" name="empPwd" size="20"
+					value="<%=empVO.getEmpPwd()%>" /></td>
+			</tr>
+		
 
 			<tr>
 				<th>員工姓名</th>
@@ -116,17 +131,7 @@ th, td {
 					value="<%=empVO.getEmpAddress()%>" /></td>
 			</tr>
 
-			<tr>
-				<th>帳號</th>
-				<td><input type="TEXT" name="empAcc" size="20"
-					value="<%=empVO.getEmpAcc()%>" /></td>
-			</tr>
-
-			<tr>
-				<th>密碼:</th>
-				<td><input type="password" name="empPwd" size="20"
-					value="<%=empVO.getEmpPwd()%>" /></td>
-			</tr>
+			
 
 			<tr>
 				<th>到職日</th>

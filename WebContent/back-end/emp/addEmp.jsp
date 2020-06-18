@@ -67,7 +67,7 @@ th, td {
 
 	<span class="mainTitle">員工資料新增</span>
 
-	<a href="select_page.jsp">回首頁</a>
+	<a href="listAllEmp.jsp">返回員工資料</a>
 
 	<hr class="mainTitlehr">
 
@@ -87,7 +87,7 @@ th, td {
 		<table>
 			<tr>
 				<th>帳號</th>
-				<td><input type="TEXT" name="empAcc" size="20"
+				<td><input type="Email" name="empAcc" size="20"
 					value="<%=(empVO == null) ? "" : empVO.getEmpAcc()%>" /></td>
 			</tr>
 
