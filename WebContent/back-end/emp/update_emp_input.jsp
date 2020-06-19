@@ -7,8 +7,8 @@
 %>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>員工資料修改 - update_emp_input.jsp</title>
+
+<%@ include file="../head.jsp"%>
 
 <style>
 table {
@@ -50,7 +50,9 @@ th, td {
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
+
+<%@ include file="../header.jsp"%>
 
 	<span class="mainTitle">員工資料修改</span>
 
@@ -178,6 +180,9 @@ th, td {
 			type="hidden" name="empID" value="<%=empVO.getEmpID()%>"> <input
 			type="submit" value="送出修改">
 	</FORM>
+	
+	
+	<%@ include file="../footer.jsp"%>
 </body>
 
 

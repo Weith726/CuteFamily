@@ -23,7 +23,7 @@
 				<a class="dropdown-item" href="#">預留功能列</a>
 
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="login.html">登出</a>
+				<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/login.html">登出</a>
 			</div>
 		</div>
 

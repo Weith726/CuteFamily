@@ -79,9 +79,6 @@ float:right;
 
 	<!-- 	<a href="select_page.jsp">¦^­º­¶</a> -->
 
-	
-
-
 
 	<hr class="mainTitlehr">
 
