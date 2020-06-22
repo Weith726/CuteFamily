@@ -94,11 +94,12 @@ th, td {
 					value="<%=(empVO == null) ? "" : empVO.getEmpAcc()%>" /></td>
 			</tr>
 
-			<tr>
-				<th>密碼</th>
-				<td><input type="password" name="empPwd" size="20"
-					value="<%=(empVO == null) ? "" : empVO.getEmpPwd()%>" /></td>
-			</tr>
+<!-- 密碼不該讓管理者輸入 -->
+<!-- 			<tr> -->
+<!-- 				<th>密碼</th> -->
+<!-- 				<td><input type="password" name="empPwd" size="20" -->
+<%-- 					value="<%=(empVO == null) ? "" : empVO.getEmpPwd()%>" /></td> --%>
+<!-- 			</tr> -->
 		
 		
 			<tr>

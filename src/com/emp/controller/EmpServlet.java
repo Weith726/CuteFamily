@@ -6,6 +6,14 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import com.emp.model.*;
 
@@ -130,7 +138,9 @@ public class EmpServlet extends HttpServlet {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String empID = req.getParameter("empID").trim();
 				
+				
 				String empName = req.getParameter("empName");
+				
 				String empNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (empName == null || empName.trim().length() == 0) {
 					errorMsgs.add("員工姓名: 請勿空白");
@@ -258,7 +268,7 @@ public class EmpServlet extends HttpServlet {
 				empVO = empSvc.updateEmp(empID, empName, empGender, empBirth, empJob,empPhone, empAddress,empAcc,empPwd,empPic,hiredate,quitdate,empStatus);
 			
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-//				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
@@ -331,10 +341,17 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("帳號請勿空白");
 				}
 				
-				String empPwd = req.getParameter("empPwd").trim();
-				if (empPwd == null || empPwd.trim().length() == 0) {
-					errorMsgs.add("密碼請勿空白");
-				}
+				
+				
+				
+				String empPwd = getRandomPwd();
+				
+				
+				
+//				String empPwd = req.getParameter("empPwd").trim();
+//				if (empPwd == null || empPwd.trim().length() == 0) {
+//					errorMsgs.add("密碼請勿空白");
+//				}
 				
 				//上傳圖片
 				Part part = req.getPart("empPic");
@@ -398,6 +415,18 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 						 empPic, hiredate, quitdate,  empStatus);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				String to = empAddress;
+			      
+			      String subject = "密碼通知";
+			      
+			      String ch_name = "peter1";
+			      String passRandom = "111";
+			      String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" +" (已經啟用)"; 
+			       
+			      EmpServlet mailService = new EmpServlet();
+			      mailService.sendMail(to, subject, messageText);
+				
+				
 				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);	
@@ -445,6 +474,54 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 		
 	
 	}
+	
+	public String getRandomPwd() {
+		String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		StringBuffer randomPwd = new StringBuffer("");
+		for (int i = 1; i <= 8; i++) {
+			
+			randomPwd.append(str.charAt((int) (Math.random() * 62)));
+		}
+		return randomPwd.toString();
+	}
+	
+	public void sendMail(String to, String subject, String messageText) {
+		
+		   try {
+			   // 設定使用SSL連線至 Gmail smtp Server
+			   Properties props = new Properties();
+			   props.put("mail.smtp.host", "smtp.gmail.com");
+			   props.put("mail.smtp.socketFactory.port", "465");
+			   props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+			   props.put("mail.smtp.auth", "true");
+			   props.put("mail.smtp.port", "465");
+
+	       // ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+	       // ●須將myGmail的【安全性較低的應用程式存取權】打開
+		     final String myGmail = "ixlogic.wu@gmail.com";
+		     final String myGmail_password = "BBB45678BBB";
+			   Session session = Session.getInstance(props, new Authenticator() {
+				   protected PasswordAuthentication getPasswordAuthentication() {
+					   return new PasswordAuthentication(myGmail, myGmail_password);
+				   }
+			   });
+
+			   Message message = new MimeMessage(session);
+			   message.setFrom(new InternetAddress(myGmail));
+			   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
+			  
+			   //設定信中的主旨  
+			   message.setSubject(subject);
+			   //設定信中的內容 
+			   message.setText(messageText);
+
+			   Transport.send(message);
+			   System.out.println("傳送成功!");
+	     }catch (MessagingException e){
+		     System.out.println("傳送失敗!");
+		     e.printStackTrace();
+	     }
+	   }
 
 	
 }

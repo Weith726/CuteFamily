@@ -45,6 +45,9 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String UPDATE = 
 			"UPDATE EMPLOYEE set empName=?,empGender=?,empBirth=?,empJob=?,empPhone=?,empAddress=?,empAcc=?," + 
 			"empPwd=?,empPic=?,hiredate=?,quitdate=?,empStatus=? where empId = ?";
+	
+	private static final String GET_EMP_INFO = 
+			"SELECT empID,empName,empPic FROM EMPLOYEE where empacc = '?' AND empPwd = ?";
 
 	
 
@@ -252,6 +255,61 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 		return empVO;
 	}
+	@Override
+	public EmpVO findByAccAndPwd(String empAcc, String empPwd) {
+		EmpVO empVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_EMP_INFO);
+
+			pstmt.setString(1, empAcc);
+			pstmt.setString(2, empPwd);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo 也稱為 Domain objects
+				empVO = new EmpVO();
+				empVO.setEmpID(rs.getString("empID"));
+				empVO.setEmpName(rs.getString("empName"));		
+				empVO.setEmpPic(rs.getBytes("empPic"));
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return empVO;
+	}
 
 	@Override
 	public List<EmpVO> getAll() {
@@ -317,5 +375,7 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 		return list;
 	}
+
+
 
 }

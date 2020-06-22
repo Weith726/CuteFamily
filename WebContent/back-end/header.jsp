@@ -1,9 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+
+<%@ page import="com.emp.model.*"%>
+
+<%
+	EmpVO empVONav = (EmpVO) session.getAttribute("empVONav");
+%>
+
+
 <nav class="navbar fixed-top">
 	<div class="icon">
-		<a href="<%=request.getContextPath()%>/back-end/Index.jsp">Cute:)<span style="color: #00E8E8;">Family</span>
-		</a> 
+		<a href="<%=request.getContextPath()%>/back-end/Index.jsp">Cute:)<span
+			style="color: #00E8E8;">Family</span>
+		</a>
 
 	</div>
 
@@ -12,25 +21,20 @@
 	<div class="action" id="navbarMenu">
 
 
-		<div class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> <span class="mem-name">員工姓名</span> <img
-				src="https://img.zi.org.tw/kocpc/2016/03/1459154850-700b055d1420ad51e9c6ea269dbf2317.jpg"
-				class="mem-pic">
-			</a>
-			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				<a class="dropdown-item" href="#">預留功能列</a>
-
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/login.html">登出</a>
-			</div>
-		</div>
-
-		<!-- <button type="button" class="btn btn-primary btn-lg" id="loginBtn">登入</button> -->
+		<img src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVONav.empID}" class="mem-pic">
+			<span class="mem-name"><%=empVONav.getEmpName()%></span> 
 
 
+		<FORM METHOD="post"
+			ACTION="<%=request.getContextPath()%>/back-end/login.do">
+			<%-- 				<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/login.html">登出</a> --%>
+			<input type="submit" value="登出"> <input type="hidden"
+				name="action" value="logout">
+		</FORM>
+		
+		
 	</div>
+
 
 
 </nav>
@@ -165,7 +169,8 @@
 			<path
 								d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
 		</svg> 客訴管理</a></li>
-				<li class="nav-item-single"><a class="nav-link" href="<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp"><svg
+				<li class="nav-item-single"><a class="nav-link"
+					href="<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp"><svg
 							class="bi bi-unlock" width="1em" height="1em" viewBox="0 0 16 16"
 							fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd"

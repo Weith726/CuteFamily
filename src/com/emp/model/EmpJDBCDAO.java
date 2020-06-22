@@ -23,7 +23,8 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	private static final String UPDATE = "UPDATE EMPLOYEE set empName=?,empGender=?,empBirth=?,empJob=?,empPhone=?,empAddress=?,empAcc=?,"
 			+ "empPwd=?,empPic=?,hiredate=?,quitdate=?,empStatus=? where empID = ?";
 
-	
+	private static final String GET_EMP_INFO = 
+			"SELECT empID,empName,empPic FROM EMPLOYEE where empacc = ? AND empPwd = ?";
 	@Override
 	public void insert(EmpVO empVO) {
 		// TODO Auto-generated method stub
@@ -237,7 +238,66 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		}
 		return empVO;
 	}
+	
+	
+	@Override
+	public EmpVO findByAccAndPwd(String empAcc, String empPwd) {
+		EmpVO empVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_EMP_INFO);
+
+			pstmt.setString(1, empAcc);
+			pstmt.setString(2, empPwd);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo 也稱為 Domain objects
+				empVO = new EmpVO();
+				empVO.setEmpID(rs.getString("empID"));
+				empVO.setEmpName(rs.getString("empName"));		
+				empVO.setEmpPic(rs.getBytes("empPic"));
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return empVO;
+	}
 	@Override
 	public List<EmpVO> getAll() {
 		List<EmpVO> list = new ArrayList<EmpVO>();
@@ -345,33 +405,39 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 //		dao.delete(1020);
 //
 //		// 查詢
-//		EmpVO empVO3 = dao.findByPrimaryKey(7001);
-//		System.out.print(empVO3.getEmpno() + ",");
-//		System.out.print(empVO3.getEname() + ",");
-//		System.out.print(empVO3.getJob() + ",");
-//		System.out.print(empVO3.getHiredate() + ",");
-//		System.out.print(empVO3.getSal() + ",");
-//		System.out.print(empVO3.getComm() + ",");
-//		System.out.println(empVO3.getDeptno());
+//		EmpVO empVO3 = dao.findByPrimaryKey("1003");
+//		System.out.print(empVO3.getEmpID() + ",");
+//		System.out.print(empVO3.getEmpName() + ",");
+//		System.out.print(empVO3.getEmpPic() + ",");
+
+		
+		// 查詢依照帳密
+//		EmpVO empVO = dao.findByAccAndPwd("Jared01@gmail.com", "123456");
+//		System.out.print(empVO.getEmpID() + ",");
+//		System.out.print(empVO.getEmpName() + ",");
+//		System.out.print(empVO.getEmpPic() + ",");
+//
 //		System.out.println("---------------------");
 
 		// 查詢
-		List<EmpVO> list = dao.getAll();
-		for (EmpVO aEmp : list) {
-			System.out.print(aEmp.getEmpID() + ",");
-			System.out.print(aEmp.getEmpName() + ",");
-			System.out.print(aEmp.getEmpGender() + ",");
-			System.out.print(aEmp.getEmpBirth() + ",");
-			System.out.print(aEmp.getEmpJob() + ",");
-			System.out.print(aEmp.getEmpPhone() + ",");
-			System.out.print(aEmp.getEmpAddress()+",");
-			System.out.print(aEmp.getEmpAcc() + ",");
-			System.out.print(aEmp.getEmpPwd() + ",");
-			System.out.print(aEmp.getEmpPic() + ",");
-			System.out.print(aEmp.getHiredate() + ",");
-			System.out.print(aEmp.getQuitdate() + ",");
-			System.out.print(aEmp.getEmpStatus());
-			System.out.println();
-		}
+//		List<EmpVO> list = dao.getAll();
+//		for (EmpVO aEmp : list) {
+//			System.out.print(aEmp.getEmpID() + ",");
+//			System.out.print(aEmp.getEmpName() + ",");
+//			System.out.print(aEmp.getEmpGender() + ",");
+//			System.out.print(aEmp.getEmpBirth() + ",");
+//			System.out.print(aEmp.getEmpJob() + ",");
+//			System.out.print(aEmp.getEmpPhone() + ",");
+//			System.out.print(aEmp.getEmpAddress()+",");
+//			System.out.print(aEmp.getEmpAcc() + ",");
+//			System.out.print(aEmp.getEmpPwd() + ",");
+//			System.out.print(aEmp.getEmpPic() + ",");
+//			System.out.print(aEmp.getHiredate() + ",");
+//			System.out.print(aEmp.getQuitdate() + ",");
+//			System.out.print(aEmp.getEmpStatus());
+//			System.out.println();
+//		}
 	}
+
+
 }

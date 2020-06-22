@@ -39,7 +39,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginHandler</servlet-name>
-    <url-pattern>/back-end/login.post</url-pattern>
+    <url-pattern>/back-end/login.do</url-pattern>
   </servlet-mapping>
   
    <filter>

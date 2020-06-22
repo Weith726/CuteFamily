@@ -9,6 +9,7 @@
 	EmpService empSvc = new EmpService();
 	List<EmpVO> list = empSvc.getAll();
 	pageContext.setAttribute("list", list);
+	
 %>
 
 
@@ -42,18 +43,6 @@ th, td {
 	border-color: rgba(0, 0, 0, 0.5);
 }
 
-.mainTitle {
-	letter-spacing: 8px;
-	color: #42454C;
-	font-weight: bold;
-	font-size: 28px;
-	padding-left: 20px;
-}
-
-/*主內容標題下分隔線*/
-.mainTitlehr {
-	border: 2px solid lightcoral;
-}
 
 img {
 	max-width: 100px;

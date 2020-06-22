@@ -2,6 +2,9 @@
     
 </div>
 
+<footer class="Footer">Copyright © 萌寵家族 Cute Family
+</footer>
+
 </div>
 
 </div>
