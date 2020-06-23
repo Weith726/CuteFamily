@@ -6,16 +6,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import com.emp.model.*;
+import com.mail.MailService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class EmpServlet extends HttpServlet {
@@ -184,9 +176,12 @@ public class EmpServlet extends HttpServlet {
 				}
 				
 				String empAcc = req.getParameter("empAcc").trim();
+				String empAccReg = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
 				if (empAcc == null || empAcc.trim().length() == 0) {
-					errorMsgs.add("帳號請勿空白");
-				}
+					errorMsgs.add("郵件請勿空白");
+				}else if(!empAcc.trim().matches(empAccReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("郵件地址格式錯誤");
+	            }
 				
 				String empPwd = req.getParameter("empPwd").trim();
 				if (empPwd == null || empPwd.trim().length() == 0) {
@@ -283,6 +278,7 @@ public class EmpServlet extends HttpServlet {
 		}
 
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+        	
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -337,9 +333,12 @@ public class EmpServlet extends HttpServlet {
 				}
 				
 				String empAcc = req.getParameter("empAcc").trim();
+				String empAccReg = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
 				if (empAcc == null || empAcc.trim().length() == 0) {
-					errorMsgs.add("帳號請勿空白");
-				}
+					errorMsgs.add("郵件請勿空白");
+				}else if(!empAcc.trim().matches(empAccReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("郵件地址格式錯誤");
+	            }
 				
 				
 				
@@ -415,17 +414,19 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 						 empPic, hiredate, quitdate,  empStatus);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String to = empAddress;
+					String to = empAcc;
 			      
-			      String subject = "密碼通知";
+			      String subject = "萌寵家族員工密碼通知";
 			      
-			      String ch_name = "peter1";
-			      String passRandom = "111";
+			      String ch_name = empName;
+			      String passRandom = empPwd;
 			      String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" +" (已經啟用)"; 
 			       
-			      EmpServlet mailService = new EmpServlet();
+			      MailService mailService = new MailService();
 			      mailService.sendMail(to, subject, messageText);
-				
+			      
+			     
+
 				
 				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -485,43 +486,7 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 		return randomPwd.toString();
 	}
 	
-	public void sendMail(String to, String subject, String messageText) {
-		
-		   try {
-			   // 設定使用SSL連線至 Gmail smtp Server
-			   Properties props = new Properties();
-			   props.put("mail.smtp.host", "smtp.gmail.com");
-			   props.put("mail.smtp.socketFactory.port", "465");
-			   props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-			   props.put("mail.smtp.auth", "true");
-			   props.put("mail.smtp.port", "465");
 
-	       // ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
-	       // ●須將myGmail的【安全性較低的應用程式存取權】打開
-		     final String myGmail = "ixlogic.wu@gmail.com";
-		     final String myGmail_password = "BBB45678BBB";
-			   Session session = Session.getInstance(props, new Authenticator() {
-				   protected PasswordAuthentication getPasswordAuthentication() {
-					   return new PasswordAuthentication(myGmail, myGmail_password);
-				   }
-			   });
-
-			   Message message = new MimeMessage(session);
-			   message.setFrom(new InternetAddress(myGmail));
-			   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
-			  
-			   //設定信中的主旨  
-			   message.setSubject(subject);
-			   //設定信中的內容 
-			   message.setText(messageText);
-
-			   Transport.send(message);
-			   System.out.println("傳送成功!");
-	     }catch (MessagingException e){
-		     System.out.println("傳送失敗!");
-		     e.printStackTrace();
-	     }
-	   }
 
 	
 }

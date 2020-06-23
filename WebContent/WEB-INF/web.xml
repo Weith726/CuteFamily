@@ -42,6 +42,16 @@
     <url-pattern>/back-end/login.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>OptServlet</servlet-name>
+    <servlet-class>com.opt.controller.OptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OptServlet</servlet-name>
+    <url-pattern>/back-end/opt/opt.do</url-pattern>
+  </servlet-mapping>
+  
+  
    <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>filters.LoginFilter</filter-class>

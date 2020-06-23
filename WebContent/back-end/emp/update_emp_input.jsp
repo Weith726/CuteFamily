@@ -81,22 +81,12 @@ th, td {
 				<td><%=empVO.getEmpID()%></td>
 			</tr>
 			
-			<tr>
-				<th>帳號</th>
-				<td><input type="Email" name="empAcc" size="20"
-					value="<%=empVO.getEmpAcc()%>" /></td>
-			</tr>
-
-			<tr>
-				<th>密碼:</th>
-				<td><input type="password" name="empPwd" size="20"
-					value="<%=empVO.getEmpPwd()%>" /></td>
-			</tr>
+			
 		
 
 			<tr>
 				<th>員工姓名</th>
-				<td><input type="TEXT" name="empName" size="10"
+				<td><input type="TEXT" name="empName" size="10" maxlength="20"
 					value="<%=empVO.getEmpName()%>" /></td>
 			</tr>
 
@@ -109,6 +99,18 @@ th, td {
 				<label for="female">女</label><br>
 				</td>
 			</tr>
+			
+			<tr>
+				<th>Email</th>
+				<td><input type="email" name="empAcc" size="20" maxlength="30"
+					value="<%=empVO.getEmpAcc()%>" /></td>
+			</tr>
+
+			<tr>
+				<th>密碼:</th>
+				<td><input type="password" name="empPwd" size="20"
+					value="<%=empVO.getEmpPwd()%>" /></td>
+			</tr>
 
 			<tr>
 				<th>生日</th>
@@ -118,18 +120,18 @@ th, td {
 
 			<tr>
 				<th>職位</th>
-				<td><input type="TEXT" name="empJob" size="10"
+				<td><input type="TEXT" name="empJob" size="10" maxlength="6"
 					value="<%=empVO.getEmpJob()%>" /></td>
 			</tr>
 
 			<tr>
 				<th>電話</th>
-				<td><input type="TEXT" name="empPhone" size="10"
+				<td><input type="TEXT" name="empPhone" size="11" maxlength="11"
 					value="<%=empVO.getEmpPhone()%>" /></td>
 			</tr>
 			<tr>
 				<th>地址</th>
-				<td><input type="TEXT" name="empAddress" size="50"
+				<td><input type="TEXT" name="empAddress" size="40"
 					value="<%=empVO.getEmpAddress()%>" /></td>
 			</tr>
 

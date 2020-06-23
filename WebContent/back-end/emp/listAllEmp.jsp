@@ -9,7 +9,6 @@
 	EmpService empSvc = new EmpService();
 	List<EmpVO> list = empSvc.getAll();
 	pageContext.setAttribute("list", list);
-	
 %>
 
 
@@ -43,18 +42,17 @@ th, td {
 	border-color: rgba(0, 0, 0, 0.5);
 }
 
-
 img {
 	max-width: 100px;
 }
 
 .addEmpBtn {
-float:right;
+	float: right;
 	font-size: 22px;
 	padding: 5px 20px;
 	background-color: #e7e7e7;
 	color: black;
-	margin-bottom:20px;
+	margin-bottom: 20px;
 }
 </style>
 
@@ -101,10 +99,10 @@ float:right;
 			<th>刪除</th>
 
 		</tr>
-		
+
 		<%@ include file="page1.file"%>
 		<input class="addEmpBtn" type="button" value="新增員工"
-		onclick="location.href='addEmp.jsp'">
+			onclick="location.href='addEmp.jsp'">
 		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -138,12 +136,12 @@ float:right;
 					</FORM>
 				</td>
 				<td>
-					<FORM METHOD="post"
+					<FORM METHOD="post" id="formDel" onsubmit=" return confirmDel();"
 						ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="刪除"> <input type="hidden"
 							name="empID" value="${empVO.empID}"> <input type="hidden"
-							name="action" value="delete">
+							name="action" value="delete" id="delete">
 					</FORM>
 				</td>
 
@@ -155,6 +153,23 @@ float:right;
 	<%@ include file="page2.file"%>
 
 	<%@ include file="../footer.jsp"%>
+
+	<script type="text/javascript">
+	
+	//刪除前的確認
+		function confirmDel() {	
+
+			var txt;
+			var r = confirm("確定刪除?");
+			if (r == true) {
+				return true;
+			} else {
+// 				document.getElementById("formDel").value = "";//清空文本框  
+				return false;
+			}
+
+		};
+	</script>
 
 </body>
 </html>

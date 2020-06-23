@@ -5,6 +5,7 @@
 <%@ page import="com.emp.model.*"%>
 
 <%
+ // 取得登入成功時拿到的姓名跟照片
 	EmpVO empVONav = (EmpVO) session.getAttribute("empVONav");
 %>
 <!DOCTYPE html>
@@ -98,7 +99,7 @@
 							門診管理 ▾
 
 							<ul>
-								<li><a href="#">班表管理</a></li>
+								<li><a href="<%=request.getContextPath()%>/back-end/opt/select_page.jsp">班表管理</a></li>
 								<li><a href="#">預約管理</a></li>
 								<li><a href="#">團隊資料管理</a></li>
 								<li><a href="#">診療紀錄</a></li>

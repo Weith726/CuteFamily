@@ -12,7 +12,7 @@ public class OptService {
 		dao = new OptJDBCDAO();
 	}
 
-	public OptVO addEmp(String docNo,java.sql.Date optDate,String optSession,
+	public OptVO addOptSession(String docNo,java.sql.Date optDate,String optSession,
 			Integer currentCount,Integer maximum) {
 
 		OptVO optVO = new OptVO();
@@ -27,7 +27,7 @@ public class OptService {
 		return optVO;
 	}
 
-	public OptVO updateEmp(String sessionNo,String docNo,java.sql.Date optDate
+	public OptVO updateOptSession(String sessionNo,String docNo,java.sql.Date optDate
 			,String optSession,Integer currentCount,Integer maximum) {
 
 		OptVO optVO = new OptVO();
@@ -44,11 +44,11 @@ public class OptService {
 		return optVO;
 	}
 
-	public void deleteEmp(String sessionNo) {
+	public void deleteOptSession(String sessionNo) {
 		dao.delete(sessionNo);
 	}
 
-	public OptVO getOneEmp(String sessionNo) {
+	public OptVO getOneOptSession(String sessionNo) {
 		return dao.findByPrimaryKey(sessionNo);
 	}
 

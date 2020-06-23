@@ -85,14 +85,10 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="emp.do" name="form1"
+	<FORM METHOD="post" ACTION="emp.do" name="form1" id="form1"
 		enctype="multipart/form-data">
 		<table>
-			<tr>
-				<th>帳號</th>
-				<td><input type="Email" name="empAcc" size="20"
-					value="<%=(empVO == null) ? "" : empVO.getEmpAcc()%>" /></td>
-			</tr>
+			
 
 <!-- 密碼不該讓管理者輸入 -->
 <!-- 			<tr> -->
@@ -104,7 +100,7 @@ th, td {
 		
 			<tr>
 				<th>員工姓名</th>
-				<td><input type="TEXT" name="empName" size="10"
+				<td><input type="TEXT" name="empName" size="10" maxlength="20"
 					value="<%=(empVO == null) ? "" : empVO.getEmpName()%>" /></td>
 			</tr>
 
@@ -124,7 +120,11 @@ th, td {
 					</td>
 			</tr>
 
-
+			<tr>
+				<th>Email</th>
+				<td><input type="email" name="empAcc" size="20" maxlength="30"
+					value="<%=(empVO == null) ? "" : empVO.getEmpAcc()%>" /></td>
+			</tr>
 			<tr>
 				<th>生日</th>
 				<td><input name="empBirth" id="f_date1" type="text" autocomplete="off" 
@@ -133,13 +133,13 @@ th, td {
 
 			<tr>
 				<th>職位</th>
-				<td><input type="TEXT" name="empJob" size="10"
+				<td><input type="TEXT" name="empJob" size="10" maxlength="6"
 					value="<%=(empVO == null) ? "" : empVO.getEmpJob()%>" /></td>
 			</tr>
 
 			<tr>
 				<th>電話</th>
-				<td><input type="TEXT" name="empPhone" size="10"
+				<td><input type="TEXT" name="empPhone" size="11" maxlength="11"
 					value="<%=(empVO == null) ? "" : empVO.getEmpPhone()%>" /></td>
 			</tr>
 			<tr>
@@ -188,6 +188,7 @@ th, td {
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">
 	</FORM>
+	 <span id="lblMsg"></span>
 	
 	<%@ include file="../footer.jsp"%>
 </body>
@@ -332,5 +333,23 @@ $(function (){
 	//              }
 	//              return [true, ""];
 	//      }});
-</script>
+
+	
+	
+	 	 $(function () {
+            $(":submit").click(function () {
+                $("#lblMsg").text("處理中，請稍候...");
+                $(this).prop("disabled", true);
+                $("#form1").submit();
+             
+            });
+        });
+	    
+// 	        $("#send").click(function(){
+// 	        	$("#send").attr("disabled", true);
+// 	            $("#form1").submit();
+// 	        });
+	
+	
+	</script>
 </html>
