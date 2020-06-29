@@ -77,8 +77,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="emp.do" name="form1" id="form1"
-		enctype="multipart/form-data">
+	<FORM METHOD="post" ACTION="opt.do" name="form1" id="form1">
 		<table>
 			
 
@@ -95,35 +94,42 @@ th, td {
 			
 
 			<tr>
-				<th>到職日</th>
-				<td><input name="hiredate" id="f_date2" type="text"></td>
+				<th>看診日期</th>
+				<td><input name="optDate" id="f_date1" type="text"></td>
 			</tr>
 
 
 
 			<tr>
-				<th>員工狀態</th>
+				<th>醫生</th>
 				<td>
 <!-- 				<input type="text" name="empStatus" size="4" -->
 <%-- 					value="<%=(empVO == null) ? "1" : empVO.getEmpStatus()%>" /> --%>
-					<select name="empStatus">
-　						<option value="1" ${(empVO.empStatus=='1')? 'selected':''}>在職中</option>
-　						<option value="2" ${(empVO.empStatus=='2')? 'selected':''}>休假中</option>
-　						<option value="3" ${(empVO.empStatus=='3')? 'selected':''}>已離職</option>
+					<select name="docNo">
+　						<option value="DR01">DR01</option>
+　						<option value="DR02">DR02</option>
+　						<option value="DR03">DR03</option>
+
+					</select>
+					
+					</td>
+			</tr>
+			
+			<th>時段</th>
+				<td>
+<!-- 				<input type="text" name="empStatus" size="4" -->
+<%-- 					value="<%=(empVO == null) ? "1" : empVO.getEmpStatus()%>" /> --%>
+					<select name="optSession">
+　						<option value="09:00~12:00">早</option>
+　						<option value="13:00~17:00">中</option>
+　						<option value="18:00~20:00">晚</option>
 
 					</select>
 					
 					</td>
 			</tr>
 
-			<tr>
-				<th>員工照片</th>
-				<td><input type="file" name="empPic" class="upl">
-					<div>
-						<img class="preview" style="max-width: 150px; max-height: 150px;">
-						<div class="size"></div>
-					</div></td>
-			</tr>
+			
 
 
 
@@ -141,23 +147,16 @@ th, td {
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 <%
-	java.sql.Date empBirth = null;
+	java.sql.Date optDate = null;
 	try {
-		empBirth = empVO.getEmpBirth(); //非空值存到hiredate
+		optDate = optVO.getOptDate(); //非空值存到hiredate
 	} catch (Exception e) {
-		empBirth = null; //空值給null
+		optDate = null; //空值給null
 
 	}
 %>
 
-<%
-	java.sql.Date hiredate = null;
-	try {
-		hiredate = empVO.getHiredate(); //非空值存到hiredate
-	} catch (Exception e) {
-		hiredate = new java.sql.Date(System.currentTimeMillis()); //空值給今天日期
-	}
-%>
+
 
 
 <link rel="stylesheet" type="text/css"
@@ -178,34 +177,7 @@ th, td {
 </style>
 
 <script>
-$(function (){
-	 
-    function format_float(num, pos)
-    {
-        var size = Math.pow(10, pos);
-        return Math.round(num * size) / size;
-    }
- 
-    function preview(input) {
- 
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function (e) {
-                $('.preview').attr('src', e.target.result);
-                var KB = format_float(e.total / 1024, 2);
-                $('.size').text("檔案大小：" + KB + " KB");
-            }
- 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
- 
-    $("body").on("change", ".upl", function (){
-        preview(this);
-    })
-    
-})
+
 
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
@@ -213,25 +185,16 @@ $(function (){
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',          //format:'Y-m-d H:i:s',
+	       value: '<%=optDate%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           startDate:	            '1980/01/01',  // 起始日
+           //startDate:	            '1980/01/01',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
         
-        $.datetimepicker.setLocale('zh');
-        $('#f_date2').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=hiredate%>'
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
-
+        
+        
+       
 	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
 	//      1.以下為某一天之前的日期無法選擇
