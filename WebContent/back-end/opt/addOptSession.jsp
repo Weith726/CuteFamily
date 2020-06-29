@@ -122,7 +122,7 @@ th, td {
 					<select name="optSession">
 ¡@						<option value="09:00~12:00">¦­</option>
 ¡@						<option value="13:00~17:00">¤¤</option>
-¡@						<option value="18:00~20:00">±ß</option>
+¡@						<option value="18:00~20:00">±ß¤W</option>
 
 					</select>
 					
