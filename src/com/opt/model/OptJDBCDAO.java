@@ -2,6 +2,7 @@ package com.opt.model;
 
 import java.util.*;
 import java.sql.*;
+import java.sql.Date;
 
 
 public class OptJDBCDAO implements OptDAO_interface {
@@ -24,6 +25,8 @@ public class OptJDBCDAO implements OptDAO_interface {
 
 	private static final String UPDATE = "UPDATE OPTSESSION set docNo=?,optDate=?,optSession=?,"
 			+ "currentCount=?,maximum=? where sessionNo = ?";
+	
+	private static final String FIND_SESSIONNO = "SELECT sessionNo FROM OPTSESSION where docNo = ? AND optDate = ? AND optSession = ?";
 
 	@Override
 	public void insert(OptVO optVO) {
@@ -216,6 +219,65 @@ public class OptJDBCDAO implements OptDAO_interface {
 		}
 		return optVO;
 	}
+	
+	
+	@Override
+	public OptVO findRepeat(String docNo, Date optDate, String optSession) {
+		OptVO optVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(FIND_SESSIONNO);
+
+			pstmt.setString(1, docNo);
+			pstmt.setDate(2, optDate);
+			pstmt.setString(3, optSession);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo 也稱為 Domain objects
+				optVO = new OptVO();
+				optVO.setSessionNo(rs.getString("sessionNo"));
+
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return optVO;
+	}
 
 	@Override
 	public List<OptVO> getAll() {
@@ -304,15 +366,20 @@ public class OptJDBCDAO implements OptDAO_interface {
 //		dao.delete("18");
 //
 //		// 查詢
-		OptVO optVO = dao.findByPrimaryKey("16");
-		System.out.print(optVO.getSessionNo() + ",");
-		System.out.print(optVO.getDocNo() + ",");
-		System.out.print(optVO.getOptDate() + ",");
-		System.out.print(optVO.getOptSession() + ",");
-		System.out.print(optVO.getCurrentCount() + ",");
-		System.out.print(optVO.getMaximum());
-		System.out.println();
-		System.out.println("---------------------");
+//		OptVO optVO = dao.findByPrimaryKey("16");
+//		System.out.print(optVO.getSessionNo() + ",");
+//		System.out.print(optVO.getDocNo() + ",");
+//		System.out.print(optVO.getOptDate() + ",");
+//		System.out.print(optVO.getOptSession() + ",");
+//		System.out.print(optVO.getCurrentCount() + ",");
+//		System.out.print(optVO.getMaximum());
+//		System.out.println();
+//		System.out.println("---------------------");
+		
+		//尋找重複值
+//		OptVO optVO = dao.findRepeat("DR01",java.sql.Date.valueOf("2020-06-30"),"10:00~12:00");
+//		System.out.print(optVO.getSessionNo() + ",");
+//		System.out.println("---------------------");
 
 		// 查詢
 		List<OptVO> list = dao.getAll();
@@ -326,5 +393,7 @@ public class OptJDBCDAO implements OptDAO_interface {
 			System.out.println();
 		}
 	}
+
+	
 
 }

@@ -1,5 +1,6 @@
 package com.opt.model;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -50,6 +51,10 @@ public class OptService {
 
 	public OptVO getOneOptSession(String sessionNo) {
 		return dao.findByPrimaryKey(sessionNo);
+	}
+	
+	public OptVO findSession(String docNo,Date optDate,String optSession) {
+		return dao.findRepeat(docNo,optDate,optSession);
 	}
 
 	public List<OptVO> getAll() {

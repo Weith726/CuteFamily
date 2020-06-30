@@ -14,61 +14,57 @@
 
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<%@ include file="../head.jsp"%>
 
 <style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
-  table {
-	width: 90%;
+ table {
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
+	border: 1px solid #CCCCFF;
+}
+
+table, th, td {
+	text-align: center;
+}
+
+th {
+	padding: 5px;
+	background-color: lightcoral;
+}
+
+th, td {
+	padding: 5px;
+	border-bottom: dotted;
+	border-width: 1px;
+	border-color: rgba(0, 0, 0, 0.5);
+}
+
+img {
+	max-width: 100px;
+}
+
+.addEmpBtn {
+	float: right;
+	font-size: 22px;
+	padding: 5px 20px;
+	background-color: #e7e7e7;
+	color: black;
+	margin-bottom: 20px;
+}
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-<h4>此頁練習採用 EL 的寫法取值:</h4>
-<table id="table-1">
-	<tr><td>
-		 <h3>門診時段總列表</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
-	</td></tr>
-</table>
+<%@ include file="../header.jsp"%>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<span class="mainTitle">門診開放時段</span>
+
+	<a href="select_page.jsp">返回班表管理</a>
+
+	<hr class="mainTitlehr">
 
 <table>
 	<tr>
@@ -97,6 +93,8 @@
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
+
+<%@ include file="../footer.jsp"%>
 
 </body>
 </html>

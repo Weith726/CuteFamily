@@ -62,12 +62,12 @@ th, td {
 
 	<span class="mainTitle">新增班表</span>
 
-	<a href="listAllEmp.jsp">返回員工資料</a>
+	<a href="select_page.jsp">返回班表管理</a>
 
 	<hr class="mainTitlehr">
 
 
-	<%-- 錯誤表列 --%>
+<%-- 錯誤表列 --%> 
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -79,18 +79,7 @@ th, td {
 
 	<FORM METHOD="post" ACTION="opt.do" name="form1" id="form1">
 		<table>
-			
-
-<!-- 密碼不該讓管理者輸入 -->
-<!-- 			<tr> -->
-<!-- 				<th>密碼</th> -->
-<!-- 				<td><input type="password" name="empPwd" size="20" -->
-<%-- 					value="<%=(empVO == null) ? "" : empVO.getEmpPwd()%>" /></td> --%>
-<!-- 			</tr> -->
 		
-		
-			
-
 			
 
 			<tr>
@@ -106,27 +95,45 @@ th, td {
 <!-- 				<input type="text" name="empStatus" size="4" -->
 <%-- 					value="<%=(empVO == null) ? "1" : empVO.getEmpStatus()%>" /> --%>
 					<select name="docNo">
-　						<option value="DR01">DR01</option>
-　						<option value="DR02">DR02</option>
-　						<option value="DR03">DR03</option>
+　						<option value="DR01">張國彬</option>
+　						<option value="DR02">李美玲</option>
+　						<option value="DR03">黃昭文</option>
+						<option value="DR04">蔡旻烜</option>
+						<option value="DR05">鄭柏昕</option>
 
 					</select>
 					
 					</td>
 			</tr>
 			
-			<th>時段</th>
-				<td>
-<!-- 				<input type="text" name="empStatus" size="4" -->
-<%-- 					value="<%=(empVO == null) ? "1" : empVO.getEmpStatus()%>" /> --%>
-					<select name="optSession">
-　						<option value="09:00~12:00">早</option>
-　						<option value="13:00~17:00">中</option>
-　						<option value="18:00~20:00">晚上</option>
+<!-- 			<th>時段</th> -->
+<!-- 				<td> -->
+<!-- 					<select name="optSession"> -->
+<!-- 　						<option value="09:00~12:00">早</option> -->
+<!-- 　						<option value="13:00~17:00">中</option> -->
+<!-- 　						<option value="18:00~20:00">晚上</option> -->
 
-					</select>
+<!-- 					</select> -->
 					
-					</td>
+<!-- 					</td> -->
+<!-- 			</tr> -->
+			
+			<tr>
+				<th>時段</th>
+				<td><input type="radio" id="morning" name="optSession" value="10:00~12:00"
+					${(optVO.optSession=='10:00~12:00')?'checked':'' }> <label for="morning">10:00~12:00</label><br>
+					<input type="radio" id="afternoon" name="optSession" value="14:00~17:00"
+					${(optVO.optSession=='14:00~17:00')?'checked':'' }> <label for="afternoon">14:00~17:00</label><br>
+					<input type="radio" id="night" name="optSession" value="18:00~20:00"
+					${(optVO.optSession=='18:00~20:00')?'checked':'' }> <label for="night">18:00~20:00</label><br> 
+					
+					
+			</tr>
+			
+			<tr>
+				<th>預約限制數</th>
+				<td><input type="text" name="maximum" size="2" maxlength="2"
+					value="<%=(optVO == null || optVO.getMaximum() == null) ? "" : optVO.getMaximum()%>" />人</td>
 			</tr>
 
 			
@@ -138,7 +145,7 @@ th, td {
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">
 	</FORM>
-	 <span id="lblMsg"></span>
+
 	
 	<%@ include file="../footer.jsp"%>
 </body>
@@ -242,21 +249,7 @@ th, td {
 	//      }});
 
 	
-	
-	 	 $(function () {
-            $(":submit").click(function () {
-                $("#lblMsg").text("處理中，請稍候...");
-                $(this).prop("disabled", true);
-                $("#form1").submit();
-             
-            });
-        });
-	    
-// 	        $("#send").click(function(){
-// 	        	$("#send").attr("disabled", true);
-// 	            $("#form1").submit();
-// 	        });
-	
+
 	
 	</script>
 </html>
