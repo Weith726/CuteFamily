@@ -1,5 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.opt.model.*"%>
+
+
+<%
+	OptService optSvc = new OptService();
+	List<OptVO> list = optSvc.getAll();
+	pageContext.setAttribute("list", list);
+%>
 
 <html>
 <head>
@@ -7,6 +17,7 @@
 
 <link href='../fullcalendar/main.css' rel='stylesheet' />
 <script src='../fullcalendar/main.js'></script>
+
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -28,7 +39,6 @@
           calendar.addEvent({
             title: title,
             start: arg.start,
-            end: arg.end,
             allDay: arg.allDay
           })
         }
@@ -41,66 +51,13 @@
       },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
-      events: [
-        {
-          title: 'All Day Event',
-          start: '2020-06-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2020-06-07',
-          end: '2020-06-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-06-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-06-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2020-06-11',
-          end: '2020-06-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-06-12T10:30:00',
-          end: '2020-06-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2020-06-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-06-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2020-06-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2020-06-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2020-06-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2020-06-28'
-        }
-      ]
+      events: "opt.do?action=getjson"
     });
 
     calendar.render();
   });
+
+
   </script>
   
   <style>
@@ -109,6 +66,8 @@
 	    max-width: 1100px;
 	    margin: 0 auto;
   </style>
+  
+
 
 </head>
 
@@ -129,10 +88,10 @@
 
 
 	<hr>
-	<jsp:useBean id="optSvc" scope="page" class="com.opt.model.OptService" />
+
 	¨Ì¤é´Á¬d¸ß:
 	<br>
-
+	
 
 	<div>
 		<a href='listByDate.jsp'>List</a> all Emps.

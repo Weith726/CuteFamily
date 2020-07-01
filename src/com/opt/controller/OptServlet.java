@@ -7,9 +7,8 @@ import javax.servlet.*;
 
 import javax.servlet.http.*;
 
-import com.emp.model.EmpService;
-import com.emp.model.EmpVO;
-import com.mail.MailService;
+import net.sf.json.JSONArray;
+
 import com.opt.model.*;
 
 /**
@@ -186,7 +185,24 @@ public class OptServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+
+
+		if ("getjson".equals(action)) { // 來自addEmp.jsp的請求
+
+			OptService optSvc = new OptService();
+			req.setCharacterEncoding("utf-8");
+			res.setCharacterEncoding("utf-8");
+			try {
+			List<OptVO> list = optSvc.getAll();
+			JSONArray jsonArray = JSONArray.fromObject(list);   
+			res.getWriter().println(jsonArray);
+			} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
+}
 }
