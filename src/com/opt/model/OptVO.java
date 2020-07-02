@@ -10,6 +10,11 @@ public class OptVO implements java.io.Serializable{
 	private String optSession;
 	private Integer currentCount;
 	private Integer maximum;
+	//JSON專用
+	private String title;
+	private Date start;
+	
+	
 	
 	public String getSessionNo() {
 		return sessionNo;
@@ -35,6 +40,8 @@ public class OptVO implements java.io.Serializable{
 	public void setOptSession(String optSession) {
 		this.optSession = optSession;
 	}
+	
+	
 	public Integer getCurrentCount() {
 		return currentCount;
 	}
@@ -48,6 +55,29 @@ public class OptVO implements java.io.Serializable{
 		this.maximum = maximum;
 	}
 	
+
+//    public String toString() {
+//        StringBuffer sb = new StringBuffer() ;
+//        sb.append("") ;
+//        sb.append("title:"+docNo+" ("+currentCount+")") ;
+//        sb.append("start:"+optDate) ;
+//        sb.append("") ;
+//        return sb.toString() ;
+//    }
 	
+	public void setTitle(String docNo,Integer currentCount,Integer maximum) {
+		this.title = docNo+" 醫師"+"("+currentCount+"/"+maximum+")";
+	}
+	
+	public void setStart(Date optDate) {
+		this.start = optDate;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	public Date getStart() {
+		return start;
+	}
 
 }

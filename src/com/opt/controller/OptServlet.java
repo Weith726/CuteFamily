@@ -7,9 +7,12 @@ import javax.servlet.*;
 
 import javax.servlet.http.*;
 
-import net.sf.json.JSONArray;
+import com.google.gson.*;
 
 import com.opt.model.*;
+
+
+
 
 /**
  * Servlet implementation class OptServlet
@@ -23,6 +26,8 @@ public class OptServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -188,21 +193,61 @@ public class OptServlet extends HttpServlet {
 		
 
 
-		if ("getjson".equals(action)) { // 來自addEmp.jsp的請求
-
-			OptService optSvc = new OptService();
-			req.setCharacterEncoding("utf-8");
-			res.setCharacterEncoding("utf-8");
-			try {
-			List<OptVO> list = optSvc.getAll();
-			JSONArray jsonArray = JSONArray.fromObject(list);   
-			res.getWriter().println(jsonArray);
-			} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//		if ("testJson".equals(action)) {	 // 來自addEmp.jsp的請求
+//			
+//			
+//			OptService optSvc = new OptService();
+//		
+//				List<OptVO> list = optSvc.getAll();
+//				String docno = new String();
+//				for(OptVO optVO:list) {
+//					docno = optVO.getDocNo();
+//					System.out.println(optVO.getDocNo());
+//					System.out.println(optVO.getOptSession());
+//					System.out.println(optVO.getOptDate());
+//					System.out.println(optVO.getMaximum());
+//					
+//				}
+//				System.out.println("醫生:"+docno);
+//			
+//			
+//			
+//				Gson gson = new Gson();
+//			
+//			String strvalue = "[{\"title\":\"大師\",\"start\":\"2020-07-02\"}]";
+//			
+//			
+//			
+//			
+//			 res.setCharacterEncoding("UTF-8");
+//		        System.out.println("strvalue="+strvalue);
+//		        try {
+//		            res.getWriter().print(strvalue);
+//		        } catch (IOException e) {
+//		            e.printStackTrace();
+//		        }
+//
+//
+//
+//	}
+		
+		
+//		public String getData(String title, String start) throws JSONException {
+//		    JSONObject jsonObject = new JSONObject("{  title : VARIABLE1,  start : VARIABLE2}");
+//		   
+//		    jsonObject.put("title", name);
+//		    jsonObject.put("start", age);
+//		    return jsonObject.toString();
+//		}
 
 }
+
+//	 public String testJson(HttpServletRequest request, HttpServletResponse response) {
+//	        String strvalue = "[{\"id\":111,\"title\":\"Event1\",\"start\":\"2012-03-10\",\"url\":\"http:\\/\\/yahoo.com\\/\"},{\"id\":222,\"title\":\"Event2\",\"start\":\"2012-03-20\",\"end\":\"2012-03-22\",\"url\":\"http:\\/\\/yahoo.com\\/\"}]";
+//	       
+//	        return null;
+//	    }
+
 }
+
+

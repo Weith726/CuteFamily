@@ -17,6 +17,12 @@ public class OptJDBCDAO implements OptDAO_interface {
 
 	private static final String GET_ALL_STMT = "SELECT sessionNo,docNo,to_char(optDate,'yyyy-mm-dd')optDate,optSession,"
 			+ "currentCount,maximum FROM OPTSESSION order by sessionNo";
+	
+	private static final String GET_ALL_STMT2 = "SELECT sessionNo,to_char"+
+			"(optDate,'yyyy-mm-dd')optDate,optSession,currentCount,maximum,DOCTOR.DOCNAME AS DOCNO" + 
+			"FROM OPTSESSION" + 
+			"JOIN DOCTOR ON OPTSESSION.DOCNO = DOCTOR.DOCNO" + 
+			"order by sessionNo;";
 
 	private static final String GET_ONE_STMT = "SELECT sessionNo,docNo,to_char(optDate,'yyyy-mm-dd')optDate,optSession,"
 			+ "currentCount,maximum FROM OPTSESSION where sessionNo = ?";
@@ -297,13 +303,82 @@ public class OptJDBCDAO implements OptDAO_interface {
 
 			while (rs.next()) {
 				// empVO 也稱為 Domain objects
+				
+			
 				optVO = new OptVO();
-				optVO.setSessionNo(rs.getString("sessionNo"));
-				optVO.setDocNo(rs.getString("docNo"));
-				optVO.setOptDate(rs.getDate("optDate"));
-				optVO.setOptSession(rs.getString("optSession"));
-				optVO.setCurrentCount(rs.getInt("currentCount"));
-				optVO.setMaximum(rs.getInt("maximum"));
+//				optVO.setSessionNo(rs.getString("sessionNo"));
+//				optVO.setDocNo(rs.getString("docNo"));
+//				optVO.setOptDate(rs.getDate("optDate"));
+//				optVO.setOptSession(rs.getString("optSession"));
+//				optVO.setCurrentCount(rs.getInt("currentCount"));
+//				optVO.setMaximum(rs.getInt("maximum"));
+				optVO.setTitle(rs.getString("docNo"),rs.getInt("currentCount"),rs.getInt("maximum"));
+				optVO.setStart(rs.getDate("optDate"));
+				list.add(optVO); // Store the row in the list
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<OptVO> getCalInfo() {
+		List<OptVO> list = new ArrayList<OptVO>();
+		OptVO optVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT2);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				
+			
+				optVO = new OptVO();
+//				optVO.setSessionNo(rs.getString("sessionNo"));
+//				optVO.setDocNo(rs.getString("docNo"));
+//				optVO.setOptDate(rs.getDate("optDate"));
+//				optVO.setOptSession(rs.getString("optSession"));
+//				optVO.setCurrentCount(rs.getInt("currentCount"));
+//				optVO.setMaximum(rs.getInt("maximum"));
+				optVO.setTitle(rs.getString("docNo"),rs.getInt("currentCount"),rs.getInt("maximum"));
+				optVO.setStart(rs.getDate("optDate"));
 				list.add(optVO); // Store the row in the list
 			}
 			// Handle any driver errors
@@ -384,6 +459,7 @@ public class OptJDBCDAO implements OptDAO_interface {
 		// 查詢
 		List<OptVO> list = dao.getAll();
 		for (OptVO aOpt : list) {
+			System.out.print(aOpt.getTitle() + ",");
 			System.out.print(aOpt.getSessionNo() + ",");
 			System.out.print(aOpt.getDocNo() + ",");
 			System.out.print(aOpt.getOptDate() + ",");
