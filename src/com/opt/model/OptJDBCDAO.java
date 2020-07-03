@@ -18,11 +18,14 @@ public class OptJDBCDAO implements OptDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT sessionNo,docNo,to_char(optDate,'yyyy-mm-dd')optDate,optSession,"
 			+ "currentCount,maximum FROM OPTSESSION order by sessionNo";
 	
-	private static final String GET_ALL_STMT2 = "SELECT sessionNo,to_char"+
-			"(optDate,'yyyy-mm-dd')optDate,optSession,currentCount,maximum,DOCTOR.DOCNAME AS DOCNO" + 
-			"FROM OPTSESSION" + 
-			"JOIN DOCTOR ON OPTSESSION.DOCNO = DOCTOR.DOCNO" + 
-			"order by sessionNo;";
+//	private static final String GET_ALL_STMT2 = "SELECT sessionNo,docNo,to_char(optDate,'yyyy-mm-dd')optDate,optSession,"
+//			+ "currentCount,maximum FROM OPTSESSION order by sessionNo";
+	
+	private static final String GET_ALL_STMT2 = "SELECT sessionNo,docName,to_char(optDate,'yyyy-mm-dd')optDate,"+
+			"optSession,currentCount,maximum " + 
+			"FROM OPTSESSION " + 
+			"JOIN DOCTOR ON OPTSESSION.DOCNO = DOCTOR.DOCNO " + 
+			"order by sessionNo";
 
 	private static final String GET_ONE_STMT = "SELECT sessionNo,docNo,to_char(optDate,'yyyy-mm-dd')optDate,optSession,"
 			+ "currentCount,maximum FROM OPTSESSION where sessionNo = ?";
@@ -306,14 +309,13 @@ public class OptJDBCDAO implements OptDAO_interface {
 				
 			
 				optVO = new OptVO();
-//				optVO.setSessionNo(rs.getString("sessionNo"));
-//				optVO.setDocNo(rs.getString("docNo"));
-//				optVO.setOptDate(rs.getDate("optDate"));
-//				optVO.setOptSession(rs.getString("optSession"));
-//				optVO.setCurrentCount(rs.getInt("currentCount"));
-//				optVO.setMaximum(rs.getInt("maximum"));
-				optVO.setTitle(rs.getString("docNo"),rs.getInt("currentCount"),rs.getInt("maximum"));
-				optVO.setStart(rs.getDate("optDate"));
+				optVO.setSessionNo(rs.getString("sessionNo"));
+				optVO.setDocNo(rs.getString("docNo"));
+				optVO.setOptDate(rs.getDate("optDate"));
+				optVO.setOptSession(rs.getString("optSession"));
+				optVO.setCurrentCount(rs.getInt("currentCount"));
+				optVO.setMaximum(rs.getInt("maximum"));
+
 				list.add(optVO); // Store the row in the list
 			}
 			// Handle any driver errors
@@ -377,7 +379,8 @@ public class OptJDBCDAO implements OptDAO_interface {
 //				optVO.setOptSession(rs.getString("optSession"));
 //				optVO.setCurrentCount(rs.getInt("currentCount"));
 //				optVO.setMaximum(rs.getInt("maximum"));
-				optVO.setTitle(rs.getString("docNo"),rs.getInt("currentCount"),rs.getInt("maximum"));
+//				optVO.setDocName(rs.getString("docName"));
+				optVO.setTitle(rs.getString("docName"),rs.getInt("currentCount"),rs.getInt("maximum"),rs.getString("optSession"));
 				optVO.setStart(rs.getDate("optDate"));
 				list.add(optVO); // Store the row in the list
 			}
@@ -457,15 +460,11 @@ public class OptJDBCDAO implements OptDAO_interface {
 //		System.out.println("---------------------");
 
 		// 查詢
-		List<OptVO> list = dao.getAll();
+		List<OptVO> list = dao.getCalInfo();
 		for (OptVO aOpt : list) {
-			System.out.print(aOpt.getTitle() + ",");
-			System.out.print(aOpt.getSessionNo() + ",");
-			System.out.print(aOpt.getDocNo() + ",");
-			System.out.print(aOpt.getOptDate() + ",");
-			System.out.print(aOpt.getOptSession() + ",");
-			System.out.print(aOpt.getCurrentCount() + ",");
-			System.out.print(aOpt.getMaximum());
+			System.out.println(aOpt.getTitle() + ",");
+			System.out.print(aOpt.getStart() + ",");
+
 			System.out.println();
 		}
 	}

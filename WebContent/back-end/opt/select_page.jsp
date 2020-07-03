@@ -22,10 +22,6 @@ pageContext.setAttribute("list", jsonStr);
 
 
 
-
-
-
-
 <html>
 <head>
 <%@ include file="../head.jsp"%>
@@ -66,7 +62,7 @@ pageContext.setAttribute("list", jsonStr);
 //           arg.event.remove()
 //         }
 //       },
-      editable: true,
+//      editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
       events: ${list}
 //       events: [{'title':123,'start':'2020-07-02'}]
@@ -81,7 +77,7 @@ pageContext.setAttribute("list", jsonStr);
   <style>
   
   #calendar {
-	    max-width: 1100px;
+	    max-width: 1400px;
 	    margin: 0 auto;
   </style>
   
@@ -94,8 +90,6 @@ pageContext.setAttribute("list", jsonStr);
 
 	<span class="mainTitle">班表管理</span>
 
-	<a href="select_page.jsp">回首頁</a>
-
 	<hr class="mainTitlehr">
 
 
@@ -104,19 +98,16 @@ pageContext.setAttribute("list", jsonStr);
 	</div>
 	<br>
 
-
-	<hr>
-
-	依日期查詢:
-	<br>
+<!-- 	依日期查詢: -->
+<!-- 	<br> -->
 	
 
-	<div>
-		<a href='listByDate.jsp'>List</a> all Emps.
-	</div>
+<!-- 	<div> -->
+<!-- 		<a href='listByDate.jsp'>List</a> all Emps. -->
+<!-- 	</div> -->
 
 	<FORM METHOD="post" ACTION="opt.do">
-		<b>選擇員工姓名:</b> <select size="1" name="sessionNo">
+		<b>選擇醫生:</b> <select size="1" name="sessionNo">
 			<c:forEach var="optVO" items="${optSvc.all}">
 				<option value="${optVO.sessionNo}">${optVO.sessionNo}
 			</c:forEach>

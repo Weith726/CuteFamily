@@ -58,7 +58,7 @@ public class OptService {
 	}
 
 	public List<OptVO> getAll() {
-		return dao.getAll();
+		return dao.getCalInfo();
 	}
 
 }

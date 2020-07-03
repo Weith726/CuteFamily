@@ -13,6 +13,7 @@ public class OptVO implements java.io.Serializable{
 	//JSON專用
 	private String title;
 	private Date start;
+
 	
 	
 	
@@ -65,8 +66,26 @@ public class OptVO implements java.io.Serializable{
 //        return sb.toString() ;
 //    }
 	
-	public void setTitle(String docNo,Integer currentCount,Integer maximum) {
-		this.title = docNo+" 醫師"+"("+currentCount+"/"+maximum+")";
+	public void setTitle(String docNo,Integer currentCount,Integer maximum,String optSession) {
+		String optS =new String();
+		if("10:00~12:00".equals(optSession)) {
+			optS="上午";
+		}
+		else if("14:00~17:00".equals(optSession)) {
+			optS="下午";
+		}
+		else {
+			optS="晚上";
+		}
+		
+		if(maximum==currentCount) {
+			this.title = docNo+" 醫師 "+optS+" (已額滿) ";
+		}
+		else {
+			this.title = docNo+" 醫師 "+optS+" ("+currentCount+"/"+maximum+") ";
+		}
+			
+		
 	}
 	
 	public void setStart(Date optDate) {
@@ -79,5 +98,6 @@ public class OptVO implements java.io.Serializable{
 	public Date getStart() {
 		return start;
 	}
+
 
 }
