@@ -13,7 +13,7 @@
 
 <%
 OptService optSvc = new OptService();
-List<OptVO> list = optSvc.getAll();
+List<OptVO> list = optSvc.getCalInfo();
 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 String jsonStr = gson.toJson(list);
 

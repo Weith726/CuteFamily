@@ -57,6 +57,15 @@ version="4.0">
     <url-pattern>/back-end/opt/opt.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ApptServlet</servlet-name>
+    <servlet-class>com.appt.controller.ApptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApptServlet</servlet-name>
+    <url-pattern>/back-end/appt/appt.do</url-pattern>
+  </servlet-mapping>
+  
   
    <filter>
     <filter-name>loginFilter</filter-name>

@@ -14,8 +14,8 @@ import java.sql.*;
 public class DocJDBCDAO implements DocDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "EA101";
-	String passwd = "123456";
+	String userid = "TEAM3";
+	String passwd = "123456"; 
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO DOCTOR (docno,divno,docname,roomno,seniority,intro,docpic,docstatus) VALUES (DOCTOR_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";

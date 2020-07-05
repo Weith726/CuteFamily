@@ -57,8 +57,12 @@ public class OptService {
 		return dao.findRepeat(docNo,optDate,optSession);
 	}
 
-	public List<OptVO> getAll() {
+	public List<OptVO> getCalInfo() {
 		return dao.getCalInfo();
+	}
+	
+	public List<OptVO> getAll() {
+		return dao.getAll();
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.appt.model;
 
 import java.util.*;
+import java.util.Date;
 
 import com.appt.model.ApptJDBCDAO;
 import com.appt.model.ApptVO;
@@ -22,7 +23,17 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 			+ "VALUES (to_char(sysdate,'yyyymmdd')||'-'||LPAD(to_char(APPOINTMENT_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT apptno,memno,sessionno,seqno,symdesc,symphoto,optstate FROM APPOINTMENT order by apptno";
+	
+	private static final String GET_ALL_STMT2 = 
+			"SELECT MEMNAME,to_char(optDate,'yyyy-mm-dd')optDate,OPTSESSION,seqno,symdesc,symphoto,optstate "+
+			"FROM APPOINTMENT "+
+			"JOIN OPTSESSION ON APPOINTMENT.sessionNo = OPTSESSION.sessionNo "+
+            "JOIN MEMBER ON APPOINTMENT.MEMNO = MEMBER.MEMNO "+
+            "where OPTDATE = to_date(?, 'yyyy-mm-dd') and OPTSESSION = ? "+
+            "order by seqno";
 
+	
+	
 	private static final String UPDATE = 
 			"UPDATE APPOINTMENT set memno=?, sessionno=?, seqno=?, symdesc=?, symphoto=?, optstate=? where apptno = ?";
 	
@@ -247,9 +258,12 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 		
 		try {
 			
+			
+			
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+	
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -299,6 +313,71 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 					return list;
 				}
 	
+	@Override
+	public ApptVO getApptInfo(String optDate,String optSession) {
+//		List<ApptVO> list = new ArrayList<ApptVO>();
+		
+		ApptVO apptVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;	
+		ResultSet rs = null;
+			
+		try {
+			
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT2);
+			pstmt.setString(1, optDate);
+			pstmt.setString(2, optSession);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				// apptVo �]�٬� Domain objects
+				apptVO = new ApptVO();
+				apptVO.setMemno(rs.getString("memname"));
+				apptVO.setOptDate(rs.getDate("optDate"));
+				apptVO.setOptSession(rs.getString("optSession"));
+				apptVO.setSeqno(rs.getInt("seqno"));
+				apptVO.setSymdesc(rs.getString("symdesc"));
+				apptVO.setSymphoto(rs.getBytes("symphoto"));
+				apptVO.setOptstate(rs.getInt("optstate"));
+//				list.add(apptVO); // Store the row in the list
+			}
+			// Handle any driver errors
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException("Couldn't load database driver. "
+								+ e.getMessage());
+						// Handle any SQL errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. "
+								+ se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (rs != null) {
+							try {
+								rs.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+					return apptVO;
+	}
+	
 	public static void main(String[] args) {
 		
 //		byte[] image1 = null;
@@ -310,7 +389,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //			e.printStackTrace();
 //		}
 		
-//		ApptJDBCDAO dao = new ApptJDBCDAO();
+		ApptJDBCDAO dao = new ApptJDBCDAO();
 	
 		// 新增
 //		ApptVO apptVO1 = new ApptVO();
@@ -347,20 +426,19 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //		System.out.println("---------------------");
 
 		// �d��
-//		List<ApptVO> list = dao.getAll();
+//		ApptVO apptVO = dao.getApptInfo("2020-07-27","14:00~17:00");
 //		for (ApptVO aAppt : list) {
-//			System.out.print(aAppt.getApptno() + ",");
 //			System.out.print(aAppt.getMemno() + ",");
-//			System.out.print(aAppt.getSessionno() + ",");
+//			System.out.print(aAppt.getOptSession() + ",");
 //			System.out.print(aAppt.getSeqno() + ",");
 //			System.out.print(aAppt.getSymdesc() + ",");
 //			System.out.print(aAppt.getSymphoto() + ",");
 //			System.out.println(aAppt.getOptstate());
 //			System.out.println();
 //		}
-//		
-//		
-//	}
+		
+		
+	
 	
 //	public static byte[] getPictureByteArray(String path) throws IOException {
 //		File file = new File(path);
@@ -377,4 +455,6 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //		return baos.toByteArray();
 //	
 	}
+
+	
 }

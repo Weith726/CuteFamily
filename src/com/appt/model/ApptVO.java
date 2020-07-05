@@ -1,8 +1,10 @@
 package com.appt.model;
 
 import java.sql.Blob;
+import java.sql.Date;
 
 public class ApptVO implements java.io.Serializable{
+	
 	private String apptno;
 	private String memno;
 	private String sessionno;
@@ -10,6 +12,10 @@ public class ApptVO implements java.io.Serializable{
 	private String symdesc;
 	private byte[] symphoto;
 	private Integer optstate;
+	private String memName;
+	private String optSession;
+	private Date optDate;
+	
 	
 	public String getApptno() {
 		return apptno;
@@ -52,6 +58,25 @@ public class ApptVO implements java.io.Serializable{
 	}
 	public void setOptstate(Integer optstate) {
 		this.optstate = optstate;
+	}
+	//JOIN用
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	public String getOptSession() {
+		return optSession;
+	}
+	public void setOptSession(String optSession) {
+		this.optSession = optSession;
+	}
+	public Date getOptDate() {
+		return optDate;
+	}
+	public void setOptDate(Date optDate) {
+		this.optDate = optDate;
 	}
 	
 	

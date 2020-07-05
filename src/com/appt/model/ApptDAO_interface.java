@@ -8,4 +8,5 @@ public interface ApptDAO_interface {
     public void delete(String apptno);
     public ApptVO findByPrimaryKey(String apptno);
     public List<ApptVO> getAll();
+    public ApptVO getApptInfo(String optDate,String optSession);
 }

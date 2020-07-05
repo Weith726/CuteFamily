@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.appt.model.*"%>
+
 
 
 
@@ -26,6 +26,15 @@
 
 
 	<hr class="mainTitlehr">
+	
+<c:if test="${not empty errorMsgs}">
+	<font color='red'>請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 
 
 
@@ -33,10 +42,42 @@
 		<table>
 			<tr>
 				<th>日期:</th>
-				<td><input name="apptDate" id="f_date1" type="text"></td>
+				<td><input name="optDate" id="f_date1" type="text"></td>
 			</tr>
+			
+
+     
+			
+<%-- 			<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" /> --%>
+<!-- <tr> -->
+<!--        <th>選擇醫生:</th> -->
+<!--        <td> -->
+<!--        <select size="1" name="docno" > -->
+<!--           <option value=""> -->
+<%--          <c:forEach var="docVO" items="${docSvc.all}" >  --%>
+<%--           <option value="${docVO.docno}">${docVO.docname} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        </td> -->
+			
+<!-- 	</tr>		 -->
+
+	
+	<tr>
+       <th>選擇時段:</th>
+       <td>
+       <select size="1" name="optSession" >
+          <option value="10:00~12:00">10:00~12:00
+          <option value="14:00~17:00">14:00~17:00
+          <option value="18:00~20:00">18:00~20:00
+       </select>
+       </td>
+			
+	</tr>	
+			
+			
 		</table>
-		<input type="hidden" name="action" value="insert">
+		<input type="hidden" name="action" value="listAppt">
 		<input type="submit" value="查詢">
 	</FORM>
 

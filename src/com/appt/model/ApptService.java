@@ -56,4 +56,9 @@ public class ApptService {
 	public List<ApptVO> getAll() {
 		return dao.getAll();
 	}
+	
+	
+	public ApptVO getApptInfo(String optDate,String optSession) {
+		return dao.getApptInfo(optDate,optSession);
+	}
 }
