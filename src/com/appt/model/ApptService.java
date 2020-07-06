@@ -1,8 +1,10 @@
 package com.appt.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.appt.model.ApptDAO_interface;
+import com.emp.model.EmpVO;
 
 public class ApptService {
 
@@ -55,6 +57,10 @@ public class ApptService {
 
 	public List<ApptVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<ApptVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 	
 	

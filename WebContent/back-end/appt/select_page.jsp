@@ -48,19 +48,19 @@
 
      
 			
-<%-- 			<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" /> --%>
-<!-- <tr> -->
-<!--        <th>随詳代ネ:</th> -->
-<!--        <td> -->
-<!--        <select size="1" name="docno" > -->
-<!--           <option value=""> -->
-<%--          <c:forEach var="docVO" items="${docSvc.all}" >  --%>
-<%--           <option value="${docVO.docno}">${docVO.docname} --%>
-<%--          </c:forEach>    --%>
-<!--        </select> -->
-<!--        </td> -->
+			<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" />
+<tr>
+       <th>随詳代ネ:</th>
+       <td>
+       <select size="1" name="docname" >
+          <option value="">
+         <c:forEach var="docVO" items="${docSvc.all}" > 
+          <option value="${docVO.docname}">${docVO.docname}
+         </c:forEach>   
+       </select>
+       </td>
 			
-<!-- 	</tr>		 -->
+	</tr>		
 
 	
 	<tr>

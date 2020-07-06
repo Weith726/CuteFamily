@@ -3,8 +3,16 @@ package com.appt.model;
 import java.util.*;
 import java.util.Date;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.appt.model.ApptJDBCDAO;
 import com.appt.model.ApptVO;
+import com.emp.model.EmpVO;
+
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Appt;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,10 +21,18 @@ import java.io.IOException;
 import java.sql.*;
 
 public class ApptJDBCDAO implements ApptDAO_interface {
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "TEAM3";
-	String passwd = "123456";
+	
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO APPOINTMENT (apptno,memno,sessionno,seqno,symdesc,symphoto,optstate) "
@@ -52,8 +68,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 
 		try {
 			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, apptVO.getMemno());
@@ -66,10 +81,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 			pstmt.executeUpdate();
 			
 			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. "
-								+ e.getMessage());
-						// Handle any SQL errors
+					
 					} catch (SQLException se) {
 						throw new RuntimeException("A database error occured. "
 								+ se.getMessage());
@@ -100,8 +112,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, apptVO.getMemno());
@@ -114,10 +125,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 
 			pstmt.executeUpdate();
 			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. "
-								+ e.getMessage());
-						// Handle any SQL errors
+					
 					} catch (SQLException se) {
 						throw new RuntimeException("A database error occured. "
 								+ se.getMessage());
@@ -149,18 +157,14 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			
 			pstmt.setString(1, apptno);
 
 			pstmt.executeUpdate();
 			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. "
-								+ e.getMessage());
-						// Handle any SQL errors
+				
 					} catch (SQLException se) {
 						throw new RuntimeException("A database error occured. "
 								+ se.getMessage());
@@ -193,8 +197,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 	
 		try {
 		
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, apptno);
@@ -213,10 +216,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 				apptVO.setOptstate(rs.getInt("optstate"));
 			}
 			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. "
-								+ e.getMessage());
-						// Handle any SQL errors
+					
 					} catch (SQLException se) {
 						throw new RuntimeException("A database error occured. "
 								+ se.getMessage());
@@ -260,10 +260,8 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 			
 			
 			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT);	
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -279,10 +277,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 				list.add(apptVO); // Store the row in the list
 			}
 			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. "
-								+ e.getMessage());
-						// Handle any SQL errors
+				
 					} catch (SQLException se) {
 						throw new RuntimeException("A database error occured. "
 								+ se.getMessage());
@@ -313,6 +308,74 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 					return list;
 				}
 	
+	
+	@Override
+	public List<ApptVO> getAll(Map<String, String[]> map) {
+		List<ApptVO> list = new ArrayList<ApptVO>();
+		ApptVO apptVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "SELECT memName,docname,to_char(optDate,'yyyy-mm-dd')optDate,optSession,seqno,symdesc,symphoto,optstate "+
+					"FROM APPOINTMENT "+
+					"JOIN OPTSESSION ON APPOINTMENT.sessionNo = OPTSESSION.sessionNo "+
+		            "JOIN MEMBER ON APPOINTMENT.MEMNO = MEMBER.MEMNO "+
+		            "JOIN DOCTOR ON OPTSESSION.DOCNO = DOCTOR.DOCNO "+
+		            jdbcUtil_CompositeQuery_Appt.get_WhereCondition(map)
+		            + " order by seqno";
+			
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				apptVO = new ApptVO();
+				apptVO.setMemName(rs.getString("memName"));
+				apptVO.setOptDate(rs.getDate("optDate"));
+				apptVO.setDocname(rs.getString("docname"));
+				apptVO.setOptSession(rs.getString("optSession"));
+				apptVO.setSeqno(rs.getInt("seqno"));
+				apptVO.setSymdesc(rs.getString("symdesc"));
+				apptVO.setSymphoto(rs.getBytes("symphoto"));
+				apptVO.setOptstate(rs.getInt("optstate"));
+				list.add(apptVO); // Store the row in the List
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	@Override
 	public ApptVO getApptInfo(String optDate,String optSession) {
 //		List<ApptVO> list = new ArrayList<ApptVO>();
@@ -324,8 +387,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 			
 		try {
 			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT2);
 			pstmt.setString(1, optDate);
 			pstmt.setString(2, optSession);
@@ -344,10 +406,6 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //				list.add(apptVO); // Store the row in the list
 			}
 			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. "
-								+ e.getMessage());
-						// Handle any SQL errors
 					} catch (SQLException se) {
 						throw new RuntimeException("A database error occured. "
 								+ se.getMessage());
@@ -389,7 +447,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //			e.printStackTrace();
 //		}
 		
-		ApptJDBCDAO dao = new ApptJDBCDAO();
+//		ApptJDBCDAO dao = new ApptJDBCDAO();
 	
 		// 新增
 //		ApptVO apptVO1 = new ApptVO();
@@ -455,6 +513,8 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //		return baos.toByteArray();
 //	
 	}
+
+	
 
 	
 }

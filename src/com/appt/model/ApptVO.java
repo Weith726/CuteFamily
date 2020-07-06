@@ -1,6 +1,5 @@
 package com.appt.model;
 
-import java.sql.Blob;
 import java.sql.Date;
 
 public class ApptVO implements java.io.Serializable{
@@ -12,6 +11,7 @@ public class ApptVO implements java.io.Serializable{
 	private String symdesc;
 	private byte[] symphoto;
 	private Integer optstate;
+	private String docname;
 	private String memName;
 	private String optSession;
 	private Date optDate;
@@ -77,6 +77,12 @@ public class ApptVO implements java.io.Serializable{
 	}
 	public void setOptDate(Date optDate) {
 		this.optDate = optDate;
+	}
+	public String getDocname() {
+		return docname;
+	}
+	public void setDocname(String docname) {
+		this.docname = docname;
 	}
 	
 	
