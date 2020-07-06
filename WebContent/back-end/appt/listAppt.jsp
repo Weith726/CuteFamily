@@ -15,25 +15,6 @@
 <title>員工資料 - listOneEmp.jsp</title>
 
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -53,23 +34,18 @@ th {
 
 th, td {
 	padding: 5px;
+	border-bottom: dotted;
+	border-width: 1px;
+	border-color: rgba(0, 0, 0, 0.5);
 }
 
-.mainTitle {
-	letter-spacing: 8px;
-	color: #42454C;
-	font-weight: bold;
-	font-size: 28px;
-	padding-left: 20px;
-}
-/*主內容標題下分隔線*/
-.mainTitlehr {
-	border: 2px solid lightcoral;
+.seqno{
+font-size:28px;
+color:red;
 }
 
-img{
-max-width:220px;
-
+img {
+	max-width: 150px;
 }
 </style>
 
@@ -77,7 +53,7 @@ max-width:220px;
 <body bgcolor='white'>
 
 
-	<span class="mainTitle">預約管理-查詢結果</span>
+	<span class="mainTitle">查詢結果</span>
 
 
 	<hr class="mainTitlehr">
@@ -98,7 +74,7 @@ max-width:220px;
 		<c:forEach var="apptVO" items="${listAppt}">
 		<tr>
 		
-			<td>${apptVO.seqno}</td>
+			<td class="seqno">${apptVO.seqno}</td>
 			<td>${apptVO.memName}</td>
 			<td>${apptVO.docname}</td>
 			
@@ -107,14 +83,15 @@ max-width:220px;
 
 			<td>${apptVO.optSession}</td>
 			<td>${apptVO.symdesc}</td>
-			<td>${apptVO.symphoto}</td>
+			<td><img
+					src="<%= request.getContextPath()%>/back-end/appt/img.do?apptno=${apptVO.apptno}"></td>
 			<td>${apptVO.optstate}</td>
 			
 			
 		</tr>
 		</c:forEach>
 	</table>
-	
+	<h1>${apptVO.apptno}</h1>
 <!-- 		<input class="addEmpBtn" type="button" value="返回員工管理" onclick="location.href='listAllEmp.jsp'"> -->
 
 </body>

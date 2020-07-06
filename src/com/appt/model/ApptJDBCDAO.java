@@ -321,7 +321,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 		try {
 			
 			con = ds.getConnection();
-			String finalSQL = "SELECT memName,docname,to_char(optDate,'yyyy-mm-dd')optDate,optSession,seqno,symdesc,symphoto,optstate "+
+			String finalSQL = "SELECT apptno,memName,docname,to_char(optDate,'yyyy-mm-dd')optDate,optSession,seqno,symdesc,symphoto,optstate "+
 					"FROM APPOINTMENT "+
 					"JOIN OPTSESSION ON APPOINTMENT.sessionNo = OPTSESSION.sessionNo "+
 		            "JOIN MEMBER ON APPOINTMENT.MEMNO = MEMBER.MEMNO "+
@@ -335,6 +335,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 	
 			while (rs.next()) {
 				apptVO = new ApptVO();
+				apptVO.setApptno(rs.getString("apptno"));
 				apptVO.setMemName(rs.getString("memName"));
 				apptVO.setOptDate(rs.getDate("optDate"));
 				apptVO.setDocname(rs.getString("docname"));

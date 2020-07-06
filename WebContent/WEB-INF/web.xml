@@ -39,6 +39,15 @@ version="4.0">
     <url-pattern>/back-end/emp/img.do</url-pattern>
   </servlet-mapping>
   
+      <servlet>
+    <servlet-name>ApptShowImg</servlet-name>
+    <servlet-class>com.appt.controller.ApptShowImg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApptShowImg</servlet-name>
+    <url-pattern>/back-end/appt/img.do</url-pattern>
+  </servlet-mapping>
+  
      <servlet>
     <servlet-name>LoginHandler</servlet-name>
     <servlet-class>com.emp.controller.LoginHandler</servlet-class>

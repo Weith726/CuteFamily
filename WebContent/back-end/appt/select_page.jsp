@@ -13,6 +13,31 @@
 <head>
 <%@ include file="../head.jsp"%>
 
+<style type="text/css">
+
+.select{
+/* border-style: solid; */
+/*   border-color: red; */
+  width:900px;
+
+}
+.select td{
+/* border-style: solid; */
+/*   border-color: red; */
+}
+.select th{
+text-align: right;
+/* border-style: solid; */
+/*   border-color: red; */
+}
+
+/* form{ */
+/* display:inline; */
+/* margin:0px; */
+/* } */
+
+</style>
+
 
 
 
@@ -26,60 +51,63 @@
 
 
 	<hr class="mainTitlehr">
-	
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
 
+	<c:if test="${not empty errorMsgs}">
+		<font color='red'>請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
 
+	<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" />
 
 	<FORM METHOD="post" ACTION="appt.do">
-		<table>
-			<tr>
-				<th>日期:</th>
-				<td><input name="optDate" id="f_date1" type="text"></td>
-			</tr>
-			
 
-     
-			
-			<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" />
-<tr>
-       <th>選擇醫生:</th>
-       <td>
-       <select size="1" name="docname" >
-          <option value="">
-         <c:forEach var="docVO" items="${docSvc.all}" > 
-          <option value="${docVO.docname}">${docVO.docname}
-         </c:forEach>   
-       </select>
-       </td>
-			
-	</tr>		
+				日期
+				<input name="optDate" id="f_date1" type="text">
+				
+				選擇醫生
+				<select size="1" name="docname">
+						<option value="">
+							<c:forEach var="docVO" items="${docSvc.all}">
+								<option value="${docVO.docname}">${docVO.docname}
+							</c:forEach>
+				</select>
+				
+				選擇時段
+				
+				<input type="radio" id="morning" name="optSession"value="10:00~12:00"> 
+				<label for="morning">10:00~12:00</label>
+				<input type="radio" id="afternoon" name="optSession"value="14:00~17:00"> 
+				<label for="afternoon">14:00~17:00</label>
+				<input type="radio" id="night" name="optSession" value="18:00~20:00">
+				<label for="night">18:00~20:00</label>
+				
+				
 
-	
-	<tr>
-       <th>選擇時段:</th>
-       <td>
-       <select size="1" name="optSession" >
-          <option value="10:00~12:00">10:00~12:00
-          <option value="14:00~17:00">14:00~17:00
-          <option value="18:00~20:00">18:00~20:00
-       </select>
-       </td>
+
+
+
+
+
+
+
 			
-	</tr>	
-			
-			
+<!--        <th>選擇時段:</th> -->
+				<!--        <td> --> <!--        <select size="1" name="optSession" > -->
+				<!--           <option value="10:00~12:00">10:00~12:00 --> <!--           <option value="14:00~17:00">14:00~17:00 -->
+				<!--           <option value="18:00~20:00">18:00~20:00 --> <!--        </select> -->
+				<!--        </td> -->
 		</table>
-		<input type="hidden" name="action" value="listAppt">
-		<input type="submit" value="查詢">
+		<input type="hidden" name="action" value="listAppt"> 
+		<input class="submit" type="submit" value="查詢">
 	</FORM>
+	
+	<%if (request.getAttribute("listAppt")!=null){%>
+       <jsp:include page="listAppt.jsp" />
+<%} %>
 
 
 
