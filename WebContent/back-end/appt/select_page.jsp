@@ -85,14 +85,6 @@ text-align: right;
 				<input type="radio" id="night" name="optSession" value="18:00~20:00">
 				<label for="night">18:00~20:00</label>
 				
-				
-
-
-
-
-
-
-
 
 			
 <!--        <th>¿ï¾Ü®É¬q:</th> -->

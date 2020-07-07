@@ -52,6 +52,8 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 	
 	private static final String UPDATE = 
 			"UPDATE APPOINTMENT set memno=?, sessionno=?, seqno=?, symdesc=?, symphoto=?, optstate=? where apptno = ?";
+	private static final String UPDATESTATE = 
+			"UPDATE APPOINTMENT set optstate= ? where apptno = ?";
 	
 	//以下兩個用不到
 	private static final String GET_ONE_STMT = 
@@ -148,6 +150,45 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 					}
 
 				}
+	
+	@Override
+	public void updateState(ApptVO apptVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATESTATE);
+			
+			pstmt.setInt(1, apptVO.getOptstate());
+			pstmt.setString(2, apptVO.getApptno());
+
+			pstmt.executeUpdate();
+			// Handle any driver errors
+					
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. "
+								+ se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+		
+		
+	}
 	
 	@Override
 	public void delete(String apptno) {
@@ -514,6 +555,8 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 //		return baos.toByteArray();
 //	
 	}
+
+	
 
 	
 

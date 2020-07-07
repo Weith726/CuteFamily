@@ -84,6 +84,7 @@ version="4.0">
     <filter-name>loginFilter</filter-name>
     <url-pattern>/back-end/emp/*</url-pattern>
     <url-pattern>/back-end/opt/*</url-pattern>
+    <url-pattern>/back-end/appt/*</url-pattern>
     <url-pattern>/back-end/index.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>

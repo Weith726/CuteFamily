@@ -46,6 +46,16 @@ public class ApptService {
 
 		return apptVO;
 	}
+	public ApptVO updateState(String apptno,Integer optstate) {
+
+		ApptVO apptVO = new ApptVO();
+
+		apptVO.setApptno(apptno);
+		apptVO.setOptstate(optstate);
+		dao.updateState(apptVO);
+
+		return apptVO;
+	}
 
 	public void deleteAppt(String apptno) {
 		dao.delete(apptno);

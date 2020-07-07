@@ -3,11 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%-- 萬用複合查詢-可由客戶端select_page.jsp隨意增減任何想查詢的欄位 --%>
-<%-- 此頁只作為複合查詢時之結果練習，可視需要再增加分頁、送出修改、刪除之功能--%>
+
 
 <jsp:useBean id="listAppt" scope="request" type="java.util.List<ApptVO>" />
-<%-- <jsp:useBean id="DeptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
+
 
 
 <html>
@@ -42,6 +41,7 @@ th, td {
 .seqno{
 font-size:28px;
 color:red;
+font-weight:bold;
 }
 
 img {
@@ -57,6 +57,15 @@ img {
 
 
 	<hr class="mainTitlehr">
+	
+	<c:if test="${not empty errorMsgs}">
+		<font color='red'>請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
 
 	<table>
 		<tr>
@@ -68,7 +77,8 @@ img {
 			<th>時段</th>
 			<th>寵物症狀</th>
 			<th>症狀圖片</th>
-			<th>預約狀態</th>
+			<th>狀態</th>
+			<th>確認</th>
 
 		</tr>
 		<c:forEach var="apptVO" items="${listAppt}">
@@ -85,13 +95,20 @@ img {
 			<td>${apptVO.symdesc}</td>
 			<td><img
 					src="<%= request.getContextPath()%>/back-end/appt/img.do?apptno=${apptVO.apptno}"></td>
-			<td>${apptVO.optstate}</td>
+			<td>${(apptVO.optstate =='0')?'<font color="goldenrod">未看診':(apptVO.optstate =='1')?'<font color="green">已看診':'<font color="red">已取消'}</td>
+			<td><FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/back-end/appt/appt.do"
+						style="margin-bottom: 0px;">
+						<input type="submit" value="V"> 
+						<input type="hidden" name="apptno" value="${apptVO.apptno}"> 
+						<input type="hidden" name="action" value="update">
+						<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+					</FORM></td>
 			
 			
 		</tr>
 		</c:forEach>
 	</table>
-	<h1>${apptVO.apptno}</h1>
 <!-- 		<input class="addEmpBtn" type="button" value="返回員工管理" onclick="location.href='listAllEmp.jsp'"> -->
 
 </body>
