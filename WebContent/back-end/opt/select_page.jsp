@@ -41,8 +41,11 @@ pageContext.setAttribute("list", jsonStr);
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
+      hiddenDays: [0],
+      slotMinTime: "09:00:00",
+      slotMaxTime: "22:00:00",
       locale: 'zh-tw',
-      initialDate: '2020-06-12',
+      initialDate: new Date(),
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,

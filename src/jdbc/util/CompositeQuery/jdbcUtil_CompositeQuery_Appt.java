@@ -46,6 +46,23 @@ public class jdbcUtil_CompositeQuery_Appt {
 		
 		return whereCondition.toString();
 	}
+	
+	public static String get_aCondition_For_Oracle_opt(String columnName, String value) {
+
+		String aCondition = null;
+
+		if ("maximum".equals(columnName)|| "currentCount".equals(columnName)) // 用於其他
+			aCondition = columnName + "=" + value;
+		else if ("sessionNo".equals(columnName) || "docName".equals(columnName)||"optSession".equals(columnName)|| "divName".equals(columnName)) // 用於varchar
+			aCondition = columnName + " like '%" + value + "%'";
+		else if ("optDate".equals(columnName))                          // 用於Oracle的date
+			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";
+
+		return aCondition + " ";
+	}
+	
+
+
 
 	public static void main(String argv[]) {
 

@@ -70,7 +70,7 @@ text-align: right;
 				
 				選擇醫生
 				<select size="1" name="docname">
-						<option value="">
+						<option value="">未選擇
 							<c:forEach var="docVO" items="${docSvc.all}">
 								<option value="${docVO.docname}">${docVO.docname}
 							</c:forEach>
