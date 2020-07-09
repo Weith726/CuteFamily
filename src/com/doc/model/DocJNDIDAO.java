@@ -286,4 +286,10 @@ public class DocJNDIDAO implements DocDAO_interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<DocVO> getAllByDiv(String divno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

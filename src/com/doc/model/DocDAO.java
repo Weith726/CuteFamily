@@ -29,6 +29,8 @@ public class DocDAO implements DocDAO_interface {
 			"DELETE FROM DOCTOR where docno = ?";
 	private static final String UPDATE = 
 			"UPDATE DOCTOR set divno=?, docname=?, roomno=?, seniority=?, intro=?, docpic=?, docstatus=? where docno = ?";
+	private static final String GET_ALL_BYDIVNO = 
+			"SELECT docno,divno,docname,roomno,seniority,intro,docpic,docstatus FROM DOCTOR where divno = ? order by docno ";
 	@Override
 	public void insert(DocVO docVO) {
 
@@ -216,6 +218,64 @@ public class DocDAO implements DocDAO_interface {
 		}
 		
 		@Override
+		public List<DocVO> getAllByDiv(String divno) {
+			List<DocVO> list = new ArrayList<DocVO>();
+			DocVO docVO = null;
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+		
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ALL_BYDIVNO);
+
+				pstmt.setString(1, divno);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					// docVo �]�٬� Domain objects
+					docVO = new DocVO();
+					docVO.setDocno(rs.getString("docno"));
+					docVO.setDivno(rs.getString("divno"));
+					docVO.setDocname(rs.getString("docname"));
+
+					list.add(docVO);
+				}
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+		
+		@Override
 		public List<DocVO> getAll() {
 			List<DocVO> list = new ArrayList<DocVO>();
 			DocVO docVO = null;
@@ -273,6 +333,7 @@ public class DocDAO implements DocDAO_interface {
 			}
 			return list;
 		}
+		
 	
 		
 	}

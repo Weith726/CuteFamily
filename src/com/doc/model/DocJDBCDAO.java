@@ -27,6 +27,8 @@ public class DocJDBCDAO implements DocDAO_interface {
 			"DELETE FROM DOCTOR where docno = ?";
 	private static final String UPDATE = 
 			"UPDATE DOCTOR set divno=?, docname=?, roomno=?, seniority=?, intro=?, docpic=?, docstatus=? where docno = ?";
+	private static final String GET_ALL_BYDIVNO = 
+			"SELECT docno,divno,docname,roomno,seniority,intro,docpic,docstatus FROM DOCTOR where divno = ? order by docno ";
 	
 
 	@Override
@@ -234,7 +236,70 @@ public class DocJDBCDAO implements DocDAO_interface {
 					}
 		return docVO;
 	}
+	@Override
+	public List<DocVO> getAllByDiv(String divno) {
+		List<DocVO> list = new ArrayList<DocVO>();
+		DocVO docVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 	
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_BYDIVNO);
+
+			pstmt.setString(1, divno);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				// docVo �]�٬� Domain objects
+				docVO = new DocVO();
+				docVO.setDocno(rs.getString("docno"));
+				docVO.setDivno(rs.getString("divno"));
+				docVO.setDocname(rs.getString("docname"));
+				docVO.setRoomno(rs.getInt("roomno"));
+
+				list.add(docVO); // Store the row in the list
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	@Override
 	public List<DocVO> getAll() {
 		List<DocVO> list = new ArrayList<DocVO>();
@@ -301,57 +366,69 @@ public class DocJDBCDAO implements DocDAO_interface {
 	
 	public static void main(String[] args) {
 		
-		byte[] image1 = null;
-		
-		try {
-			image1 = getPictureByteArray("WebContent/Doctor/image/doctor1.jpg");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		byte[] image1 = null;
+//		
+//		try {
+//			image1 = getPictureByteArray("WebContent/Doctor/image/doctor1.jpg");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		DocJDBCDAO dao = new DocJDBCDAO();
 	
 		// �s�W
-		DocVO docVO1 = new DocVO();
-		docVO1.setDivno("20");
-		docVO1.setDocname("�i��l3");
-		docVO1.setRoomno(1);
-		docVO1.setSeniority(27);
-		docVO1.setIntro("�ؤH�Ĥ@����ߦ�G�z�R�v���M�a�A�����x�_���~��v���|�z�ƪ��Τ��إ����~��v���|�����p�X�|�Ʋz�ƪ��A�{���@�ɤp�ʪ��~��v�|WSAVA�N����~��Ш|���v�A�o�_�ХߨȬw�p�ʪ��~��v�|FASAVA�ξ�����v�C");
-		docVO1.setDocpic(image1);
-		docVO1.setDocstatus(2);
-		dao.insert(docVO1);
+//		DocVO docVO1 = new DocVO();
+//		docVO1.setDivno("20");
+//		docVO1.setDocname("�i��l3");
+//		docVO1.setRoomno(1);
+//		docVO1.setSeniority(27);
+//		docVO1.setIntro("�ؤH�Ĥ@����ߦ�G�z�R�v���M�a�A�����x�_���~��v���|�z�ƪ��Τ��إ����~��v���|�����p�X�|�Ʋz�ƪ��A�{���@�ɤp�ʪ��~��v�|WSAVA�N����~��Ш|���v�A�o�_�ХߨȬw�p�ʪ��~��v�|FASAVA�ξ�����v�C");
+//		docVO1.setDocpic(image1);
+//		docVO1.setDocstatus(2);
+//		dao.insert(docVO1);
 		
 		//�ק�
-		DocVO docVO2 = new DocVO();
-		docVO2.setDocno("1009");
-		docVO2.setDivno("20");
-		docVO2.setDocname("�i��l2");
-		docVO2.setRoomno(2);
-		docVO2.setSeniority(37);
-		docVO2.setIntro("�ؤH�ĤG����ߦ�G�z�R�v���M�a�A�����x�_���~��v���|�z�ƪ��Τ��إ����~��v���|�����p�X�|�Ʋz�ƪ��A�{���@�ɤp�ʪ��~��v�|WSAVA�N����~��Ш|���v�A�o�_�ХߨȬw�p�ʪ��~��v�|FASAVA�ξ�����v�C");
-		docVO2.setDocpic(image1);
-		docVO2.setDocstatus(1);
-		dao.insert(docVO2);
+//		DocVO docVO2 = new DocVO();
+//		docVO2.setDocno("1009");
+//		docVO2.setDivno("20");
+//		docVO2.setDocname("�i��l2");
+//		docVO2.setRoomno(2);
+//		docVO2.setSeniority(37);
+//		docVO2.setIntro("�ؤH�ĤG����ߦ�G�z�R�v���M�a�A�����x�_���~��v���|�z�ƪ��Τ��إ����~��v���|�����p�X�|�Ʋz�ƪ��A�{���@�ɤp�ʪ��~��v�|WSAVA�N����~��Ш|���v�A�o�_�ХߨȬw�p�ʪ��~��v�|FASAVA�ξ�����v�C");
+//		docVO2.setDocpic(image1);
+//		docVO2.setDocstatus(1);
+//		dao.insert(docVO2);
 		
 		// �R��
-				dao.delete("");
+//				dao.delete("");
 		// �d��
-		DocVO docVO3 = dao.findByPrimaryKey("1002");
-		System.out.print(docVO3.getDocno() + ",");
-		System.out.print(docVO3.getDivno() + ",");
-		System.out.print(docVO3.getDocname() + ",");
-		System.out.print(docVO3.getRoomno() + ",");
-		System.out.print(docVO3.getSeniority() + ",");
-		System.out.print(docVO3.getIntro() + ",");
-		System.out.print(docVO3.getDocpic() + ",");
-		System.out.println(docVO3.getDocstatus());
-		System.out.println("---------------------");
+//		DocVO docVO3 = dao.findByPrimaryKey("1002");
+//		System.out.print(docVO3.getDocno() + ",");
+//		System.out.print(docVO3.getDivno() + ",");
+//		System.out.print(docVO3.getDocname() + ",");
+//		System.out.print(docVO3.getRoomno() + ",");
+//		System.out.print(docVO3.getSeniority() + ",");
+//		System.out.print(docVO3.getIntro() + ",");
+//		System.out.print(docVO3.getDocpic() + ",");
+//		System.out.println(docVO3.getDocstatus());
+//		System.out.println("---------------------");
 
 		// �d��
-		List<DocVO> list = dao.getAll();
-		for (DocVO aDoc : list) {
+//		List<DocVO> list = dao.getAll();
+//		for (DocVO aDoc : list) {
+//			System.out.print(aDoc.getDocno() + ",");
+//			System.out.print(aDoc.getDivno() + ",");
+//			System.out.print(aDoc.getDocname() + ",");
+//			System.out.print(aDoc.getRoomno() + ",");
+//			System.out.print(aDoc.getSeniority() + ",");
+//			System.out.print(aDoc.getIntro() + ",");
+//			System.out.print(aDoc.getDocpic());
+//			System.out.print(aDoc.getDocstatus());
+//			System.out.println();
+//		}
+		List<DocVO> list2 = dao.getAllByDiv("D01");
+		for (DocVO aDoc : list2) {
 			System.out.print(aDoc.getDocno() + ",");
 			System.out.print(aDoc.getDivno() + ",");
 			System.out.print(aDoc.getDocname() + ",");
@@ -366,19 +443,21 @@ public class DocJDBCDAO implements DocDAO_interface {
 		
 	}
 	
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		File file = new File(path);
-		FileInputStream fis = new FileInputStream(file);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		while ((i = fis.read(buffer)) != -1) {
-			baos.write(buffer, 0, i);
-		}
-		baos.close();
-		fis.close();
+//	public static byte[] getPictureByteArray(String path) throws IOException {
+//		File file = new File(path);
+//		FileInputStream fis = new FileInputStream(file);
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[8192];
+//		int i;
+//		while ((i = fis.read(buffer)) != -1) {
+//			baos.write(buffer, 0, i);
+//		}
+//		baos.close();
+//		fis.close();
+//
+//		return baos.toByteArray();
+//	
+//	}
 
-		return baos.toByteArray();
 	
-	}
 }

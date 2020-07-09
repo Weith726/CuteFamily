@@ -59,4 +59,10 @@ public class DocService {
 		return dao.getAll();
 	}
 	
+	public List<DocVO> getAllByDiv(String divno) {
+
+
+		return dao.getAllByDiv(divno);
+	}
+	
 }

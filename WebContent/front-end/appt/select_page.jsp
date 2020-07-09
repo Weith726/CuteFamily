@@ -4,40 +4,66 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.doc.model.*"%>
+<%@ page import="org.json.*"%>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.google.gson.GsonBuilder" %>
+<%@ page import="com.google.gson.JsonArray" %>
+<%@ page import="com.google.gson.JsonElement" %>
+<%@ page import="com.google.gson.JsonObject" %>
+<%@ page import="com.google.gson.reflect.TypeToken" %>
 
 
+<% 
 
+DocService docSvc = new DocService();
+List<DocVO> d01 = docSvc.getAllByDiv("D01");
+Gson gson = new Gson();
+String jsonStr1 = gson.toJson(d01);
+List<DocVO> d02 = docSvc.getAllByDiv("D02");
+String jsonStr2 = gson.toJson(d02);
+List<DocVO> d03 = docSvc.getAllByDiv("D03");
+String jsonStr3 = gson.toJson(d03);
 
-
-
+%>
 
 <html>
 <head>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	crossorigin="anonymous"></script>
 <style type="text/css">
-
-.select{
-/* border-style: solid; */
-/*   border-color: red; */
-  width:900px;
-
+.select {
+	/* border-style: solid; */
+	/*   border-color: red; */
+	width: 900px;
 }
-.select td{
-/* border-style: solid; */
-/*   border-color: red; */
+
+.select td {
+	/* border-style: solid; */
+	/*   border-color: red; */
+	
 }
-.select th{
-text-align: right;
-/* border-style: solid; */
-/*   border-color: red; */
+
+.select th {
+	text-align: right;
+	/* border-style: solid; */
+	/*   border-color: red; */
 }
 
 /* form{ */
 /* display:inline; */
 /* margin:0px; */
 /* } */
+.divno{
 
+width: 300px;
+font-size:28px;
+}
+.doc{
+width: 300px;
+font-size:28px;
+}
 </style>
 
 
@@ -48,77 +74,90 @@ text-align: right;
 
 
 
-	<span class="mainTitle">預約管理</span>
+	<span class="mainTitle">預約</span>
 
 
 	<hr class="mainTitlehr">
 
+<FORM METHOD="post" ACTION="appt.do">
 
 
-<%-- 	<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" /> --%>
-
-<!-- 	<FORM METHOD="post" ACTION="appt.do"> -->
-
- 
-		
-	<form  method="post" action="select_page.jsp" id ="passForm"> 
-   <input id = 'test2' type = 'hidden' name="test2"> 
-   </form>  
-				
-				
 
 
-<% 
-DocService docSvc = new DocService();
-DocVO docVO = docSvc.getOneDoc("DR01");
-pageContext.setAttribute("docVO", docVO);
 
-%>				
-<input type="hidden" id="inp" /><br/>
-	<select id="divno" >
-	<option value="ALL">請選擇
-	<option value="D01">犬科</option>
-	<option value="D02">貓科</option>
-	<option value="D03">其他科</option>
-	</select> 
+	<select id="divno" class="divno">
+		<option value="ALL">請選擇
+		<option value="D01">犬科</option>
+		<option value="D02">貓科</option>
+		<option value="D03">其他科</option>
+	</select><br>
 
 
-	<select id="doc" >
+	<select id="doc" class="doc">
 
-	</select> 
-				
 
-		
-<!-- 		<input type="hidden" name="action" value="listAppt">  -->
-<!-- 		<input class="submit" type="submit" value="查詢"> -->
-<!-- 	</FORM> -->
+	</select>
 	
 
-
-
-	
-
-
-
-
+<input type="hidden" name="action" value="displayOpt"> 
+		<input class="submit" type="submit" value="查詢">
+	</FORM>
 
 
 
 </body>
 <script type="text/javascript">
-var ttt =  document.getElementById("inp");
-var divno =  document.getElementById("divno");
-var str ='';
-divno.onchange=function (){
-inp.value=divno.value;
-str = divno.value;
-inp.addEventListener("input",changeValue(),false);
-}
-function changeValue(){
-	$("#doc").html("");
-	$("#doc").append("<option value='" +str+ "'>"+str+"</option>");
-console.log(str);
-}
+	//json轉成 JS json陣列
+	var json1 = '<%=jsonStr1%>'
+	var json2 = '<%=jsonStr2%>'
+	var json3 = '<%=jsonStr3%>'
+	
+	var divno =  document.getElementById("divno");
+	var str ='';
+	//option發生改變
+	divno.onchange=function (){
+			str = divno.value;
+			if(str==='D01'){
+				var obj = JSON.parse(json1);
+			$('#doc').html("");
+			$.each(obj, function (index,item) {
+	            var docno = obj[index].docno;
+	            var docname = obj[index].docname;
+	            //構造動態option
+	            
+	            $('#doc').append("<option value='"+docno+"'>"+docname+"</option>");
+	        });
+			}
+			if(str==='D02'){
+				var obj = JSON.parse(json2);
+			$('#doc').html("");
+			$.each(obj, function (index,item) {
+	            var docno = obj[index].docno;
+	            var docname = obj[index].docname;
+	            //構造動態option
+	            
+	            $('#doc').append("<option value='"+docno+"'>"+docname+"</option>");
+	        });
+			}
+			
+			if(str==='D03'){
+				var obj = JSON.parse(json3);
+			$('#doc').html("");
+			$.each(obj, function (index,item) {
+	            var docno = obj[index].docno;
+	            var docname = obj[index].docname;
+	            //構造動態option
+	            
+	            $('#doc').append("<option value='"+docno+"'>"+docname+"</option>");
+	        });
+			}
+			if(str==="ALL"){
+				$('#doc').html("");
+			}
+
+	}
+
+
 
 </script>
 
