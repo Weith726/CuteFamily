@@ -61,6 +61,10 @@ public class OptService {
 		return dao.getCalInfo();
 	}
 	
+	public List<OptVO> getCalInfoByDoc(String docno) {
+		return dao.getCalInfoByDoc(docno);
+	}
+	
 	public List<OptVO> getAll() {
 		return dao.getAll();
 	}

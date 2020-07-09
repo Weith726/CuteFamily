@@ -64,6 +64,14 @@ font-size:28px;
 width: 300px;
 font-size:28px;
 }
+
+.submit{
+font-size:28px;
+}
+
+.sel{
+font-size:28px;
+}
 </style>
 
 
@@ -79,27 +87,27 @@ font-size:28px;
 
 	<hr class="mainTitlehr">
 
-<FORM METHOD="post" ACTION="appt.do">
+<FORM METHOD="post" ACTION="dispOpt.jsp">
 
 
 
 
-
+<div class="sel">科別<br>
 	<select id="divno" class="divno">
 		<option value="ALL">請選擇
 		<option value="D01">犬科</option>
 		<option value="D02">貓科</option>
 		<option value="D03">其他科</option>
-	</select><br>
+	</select></div>
+
+<div class="sel">醫生<br>
+	<select id="doc" class="doc" name="doc">
 
 
-	<select id="doc" class="doc">
-
-
-	</select>
+	</select></div>
 	
 
-<input type="hidden" name="action" value="displayOpt"> 
+<!-- <input type="hidden" name="action" value="displayOpt">  -->
 		<input class="submit" type="submit" value="查詢">
 	</FORM>
 

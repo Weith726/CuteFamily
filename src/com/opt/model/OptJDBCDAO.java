@@ -26,6 +26,13 @@ public class OptJDBCDAO implements OptDAO_interface {
 			"FROM OPTSESSION " + 
 			"JOIN DOCTOR ON OPTSESSION.DOCNO = DOCTOR.DOCNO " + 
 			"order by sessionNo";
+	
+	private static final String GET_ALL_BY_DOCNO = 
+			"SELECT sessionNo,OPTSESSION.docno,docname,to_char(optDate,'yyyy-mm-dd')optDate,optSession,currentCount,maximum "+ 
+			"FROM OPTSESSION "+
+			"JOIN DOCTOR ON OPTSESSION.DOCNO = DOCTOR.DOCNO "+
+			"where OPTSESSION.docno = ? and optDate >= sysdate-1 "+
+			"order by sessionNo";
 
 	private static final String GET_ONE_STMT = "SELECT sessionNo,docNo,to_char(optDate,'yyyy-mm-dd')optDate,optSession,"
 			+ "currentCount,maximum FROM OPTSESSION where sessionNo = ?";
@@ -351,7 +358,74 @@ public class OptJDBCDAO implements OptDAO_interface {
 		return list;
 	}
 	
-	
+	@Override
+	public List<OptVO> getCalInfoByDoc(String docno) {
+		List<OptVO> list = new ArrayList<OptVO>();
+		OptVO optVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_BY_DOCNO);
+			pstmt.setString(1, docno);
+			
+			rs = pstmt.executeQuery();
+			
+			
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				
+			
+				optVO = new OptVO();
+//				optVO.setSessionNo(rs.getString("sessionNo"));
+//				optVO.setDocNo(rs.getString("docNo"));
+//				optVO.setOptDate(rs.getDate("optDate"));
+//				optVO.setOptSession(rs.getString("optSession"));
+//				optVO.setCurrentCount(rs.getInt("currentCount"));
+//				optVO.setMaximum(rs.getInt("maximum"));
+//				optVO.setDocName(rs.getString("docName"));
+				optVO.setTitle(rs.getString("docName"),rs.getInt("currentCount"),rs.getInt("maximum"),rs.getString("optSession"));
+				optVO.setStart(rs.getDate("optDate"));
+				list.add(optVO); // Store the row in the list
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	@Override
 	public List<OptVO> getCalInfo() {
 		List<OptVO> list = new ArrayList<OptVO>();
@@ -467,7 +541,17 @@ public class OptJDBCDAO implements OptDAO_interface {
 
 			System.out.println();
 		}
+		
+		List<OptVO> list2 = dao.getCalInfoByDoc("DR02");
+		for (OptVO aOpt : list2) {
+			System.out.println(aOpt.getTitle() + ",");
+			System.out.print(aOpt.getStart() + ",");
+
+			System.out.println();
+		}
 	}
+
+	
 
 	
 
