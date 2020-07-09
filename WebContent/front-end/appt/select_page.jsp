@@ -14,7 +14,7 @@
 <html>
 <head>
 
-
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style type="text/css">
 
 .select{
@@ -40,25 +40,6 @@ text-align: right;
 
 </style>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-        <script type="text/javascript">
-            function getDivi(categoryID)
-            {
-                var url="showDocs.jsp";
-                jQuery.post(url, {categoryID:categoryID}, callbackHandler);
-                
-                
-            }
-//             function callbackHandler(data)
-//             {
-                
-//                 jQuery("#ccc").html(data);
-                
-//             }
-        </script>
-
-
 
 </head>
 
@@ -83,13 +64,7 @@ text-align: right;
 	<form  method="post" action="select_page.jsp" id ="passForm"> 
    <input id = 'test2' type = 'hidden' name="test2"> 
    </form>  
-				<b>選擇科別</b>
-				<select size="1" id="divno" onchange='getDivi(this.value)'>
-						<option value="-1">請選擇
-						<option value="DR01">犬科
-						<option value="DR02">貓科
-						<option value="DR03">其他科
-				</select>
+				
 				
 
 
@@ -99,14 +74,18 @@ DocVO docVO = docSvc.getOneDoc("DR01");
 pageContext.setAttribute("docVO", docVO);
 
 %>				
-				<b>選擇獸醫:</b> <select size="1" name="docNo">
-				<option value="">請選擇
-<%-- 			<c:forEach var="docVO" items="${docSvc.oneDoc[DR01]}"> --%>
-				<option value="${docVO.docno}">${docVO.docname}
-<%-- 			</c:forEach> --%>
-		</select> 
-<!-- 		<input type="hidden" name="action" value="getOne_For_Display"> -->
-				
+<input type="hidden" id="inp" /><br/>
+	<select id="divno" >
+	<option value="ALL">請選擇
+	<option value="D01">犬科</option>
+	<option value="D02">貓科</option>
+	<option value="D03">其他科</option>
+	</select> 
+
+
+	<select id="doc" >
+
+	</select> 
 				
 
 		
@@ -114,30 +93,8 @@ pageContext.setAttribute("docVO", docVO);
 <!-- 		<input class="submit" type="submit" value="查詢"> -->
 <!-- 	</FORM> -->
 	
-	<script type="text/javascript">
-//    function aa(){
-//     document.getElementsByName('o').value=document.getElementById('s').value;
-//     }
-</script>
 
-<select id="s" onchange="aa()">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-<option value="6">6</option>
-</select>
 
-<select size="1" name="divno">
-<!-- 						<option value="-1" name="o"> -->
-<!-- 						<option value="D01" name="o"> -->
-<!-- 						<option value="D02" name="o"> -->
-<!-- 						<option value="D03" >	 -->
-<%-- 						<c:forEach var="optVO" items="${docSvc.all}"> --%> --%>
-<%-- 				<option value="${docVO.docNo}">${optVO.docNo} --%>
-<%-- 			</c:forEach> --%>
-<!-- 				</select> -->
 
 	
 
@@ -148,6 +105,21 @@ pageContext.setAttribute("docVO", docVO);
 
 
 </body>
+<script type="text/javascript">
+var ttt =  document.getElementById("inp");
+var divno =  document.getElementById("divno");
+var str ='';
+divno.onchange=function (){
+inp.value=divno.value;
+str = divno.value;
+inp.addEventListener("input",changeValue(),false);
+}
+function changeValue(){
+	$("#doc").html("");
+	$("#doc").append("<option value='" +str+ "'>"+str+"</option>");
+console.log(str);
+}
 
+</script>
 
 </html>
