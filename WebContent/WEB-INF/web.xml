@@ -75,6 +75,15 @@ version="4.0">
     <url-pattern>/back-end/appt/appt.do</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>ApptServletFront</servlet-name>
+    <servlet-class>com.appt.controller.ApptServletFront</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApptServletFront</servlet-name>
+    <url-pattern>/front-end/appt/apptStart.do</url-pattern>
+  </servlet-mapping>
+  
   
    <filter>
     <filter-name>loginFilter</filter-name>

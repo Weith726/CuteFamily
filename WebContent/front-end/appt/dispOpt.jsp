@@ -36,17 +36,22 @@ pageContext.setAttribute("list", jsonStr);
 <link href='../fullcalendar/main.css' rel='stylesheet' />
 <script src='../fullcalendar/main.js'></script>
 <script src='../fullcalendar/locales-all.js'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	crossorigin="anonymous"></script>
 
 <script>
+	var eventDate = '';
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+    	
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        right: 'dayGridMonth'//,timeGridWeek,timeGridDay'
       },
       hiddenDays: [0],
       slotMinTime: "09:00:00",
@@ -56,6 +61,7 @@ pageContext.setAttribute("list", jsonStr);
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
+
       select: function(arg) {
         var title = prompt('Event Title:');
         if (title) {
@@ -67,12 +73,17 @@ pageContext.setAttribute("list", jsonStr);
         }
         calendar.unselect()
       },
-//       eventClick: function(arg) {
-//         if (confirm('Are you sure you want to delete this event?')) {
-//           arg.event.remove()
-//         }
-//       },
-//       editable: true,
+      
+      eventClick: function(arg) {
+    	  var str = arg.event.id;
+    	  $.post("apptStart.do?action=addAppt&sessionNo="+str+"");
+        
+    	  console.log(arg.event.start);
+    	  console.log(arg.event.title);	  
+    	  console.log(arg.event.id);
+	
+      },
+      editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
       events: ${list}
 //       events: [{'title':123,'start':'2020-07-02'}]
@@ -80,6 +91,8 @@ pageContext.setAttribute("list", jsonStr);
     });
     calendar.render();
   });
+  
+  console.log(eventDate);
 
 
   </script>
@@ -108,7 +121,6 @@ pageContext.setAttribute("list", jsonStr);
 	
 
 </body>
-
 
 
 </html>

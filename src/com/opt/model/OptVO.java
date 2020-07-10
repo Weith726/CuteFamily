@@ -13,6 +13,7 @@ public class OptVO implements java.io.Serializable{
 	//JSON專用
 	private String title;
 	private Date start;
+	private String id;
 
 	
 	
@@ -87,16 +88,23 @@ public class OptVO implements java.io.Serializable{
 			
 		
 	}
-	
-	public void setStart(Date optDate) {
-		this.start = optDate;
-	}
-	
 	public String getTitle() {
 		return title;
 	}
+	
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
 	public Date getStart() {
 		return start;
+	}
+
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

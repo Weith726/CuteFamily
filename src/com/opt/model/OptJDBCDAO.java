@@ -392,6 +392,7 @@ public class OptJDBCDAO implements OptDAO_interface {
 //				optVO.setDocName(rs.getString("docName"));
 				optVO.setTitle(rs.getString("docName"),rs.getInt("currentCount"),rs.getInt("maximum"),rs.getString("optSession"));
 				optVO.setStart(rs.getDate("optDate"));
+				optVO.setId(rs.getString("sessionNo"));
 				list.add(optVO); // Store the row in the list
 			}
 			// Handle any driver errors
@@ -546,6 +547,7 @@ public class OptJDBCDAO implements OptDAO_interface {
 		for (OptVO aOpt : list2) {
 			System.out.println(aOpt.getTitle() + ",");
 			System.out.print(aOpt.getStart() + ",");
+			System.out.print(aOpt.getId() + ",");
 
 			System.out.println();
 		}
