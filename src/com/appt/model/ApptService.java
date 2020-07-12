@@ -14,12 +14,13 @@ public class ApptService {
 		dao = new ApptJDBCDAO();
 	}
 
-	public ApptVO addAppt(String memno, String sessionno, Integer seqno,
+	public ApptVO addAppt(String memno, String petNo,String sessionno, Integer seqno,
 			 String symdesc, byte[] symphoto, Integer optstate) {
 
 		ApptVO apptVO = new ApptVO();
 
 		apptVO.setMemno(memno);
+		apptVO.setPetNo(petNo);
 		apptVO.setSessionno(sessionno);
 		apptVO.setSeqno(seqno);
 		apptVO.setSymdesc(symdesc);
@@ -74,7 +75,7 @@ public class ApptService {
 	}
 	
 	
-	public ApptVO getApptInfo(String optDate,String optSession) {
-		return dao.getApptInfo(optDate,optSession);
-	}
+//	public ApptVO getApptInfo(String optDate,String optSession) {
+//		return dao.getApptInfo(optDate,optSession);
+//	}
 }

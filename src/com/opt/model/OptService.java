@@ -44,6 +44,18 @@ public class OptService {
 
 		return optVO;
 	}
+	
+	public OptVO updateCurrentCount(Integer currentCount,String sessionNo) {
+
+		OptVO optVO = new OptVO();
+		
+		optVO.setCurrentCount(currentCount);
+		optVO.setSessionNo(sessionNo);
+
+		dao.updateCurrentCount(optVO);
+
+		return optVO;
+	}
 
 	public void deleteOptSession(String sessionNo) {
 		dao.delete(sessionNo);

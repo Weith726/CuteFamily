@@ -6,6 +6,7 @@ import java.util.*;
 public interface OptDAO_interface {
     public void insert(OptVO optVO);
     public void update(OptVO optVO);
+    public void updateCurrentCount(OptVO optVO);
     public void delete(String sessionNo);
     public OptVO findByPrimaryKey(String sessionNo);
     public OptVO findRepeat(String docNo,Date optDate,String optSession);

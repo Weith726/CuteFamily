@@ -7,6 +7,7 @@ public class ApptVO implements java.io.Serializable{
 	private String apptno;
 	private String memno;
 	private String sessionno;
+	private String petNo;
 	private Integer seqno;
 	private String symdesc;
 	private byte[] symphoto;
@@ -28,6 +29,12 @@ public class ApptVO implements java.io.Serializable{
 	}
 	public void setMemno(String memno) {
 		this.memno = memno;
+	}
+	public String getPetNo() {
+		return petNo;
+	}
+	public void setPetNo(String petNo) {
+		this.petNo = petNo;
 	}
 	public String getSessionno() {
 		return sessionno;
@@ -84,6 +91,7 @@ public class ApptVO implements java.io.Serializable{
 	public void setDocname(String docname) {
 		this.docname = docname;
 	}
+	
 	
 	
 }

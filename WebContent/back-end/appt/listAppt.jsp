@@ -75,6 +75,7 @@ img {
 			<th>預約獸醫</th>
 			<th>日期</th>
 			<th>時段</th>
+			<th>寵物名稱</th>
 			<th>寵物症狀</th>
 			<th>症狀圖片</th>
 			<th>狀態</th>
@@ -92,6 +93,7 @@ img {
 					pattern="yyyy/MM/dd" /></td>
 
 			<td>${apptVO.optSession}</td>
+			<td>${apptVO.petNo}</td>
 			<td>${apptVO.symdesc}</td>
 			<td><img
 					src="<%= request.getContextPath()%>/back-end/appt/img.do?apptno=${apptVO.apptno}"></td>

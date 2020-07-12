@@ -24,9 +24,7 @@
 <style>
 
 table {
-width:100%;
-
-
+	width:100%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	border: 7px solid;
@@ -219,7 +217,7 @@ th, td {
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.datetimepicker.css" />
 <script
-	src="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.js"></script>
+	src="<%=request.getContextPath()%>/back-end/datetim	picker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/back-end/datetimepicker/jquery.datetimepicker.full.js"></script>
 
@@ -258,6 +256,7 @@ $(function (){
     }
  
     $("body").on("change", ".upl", function (){
+
         preview(this);
     })
     

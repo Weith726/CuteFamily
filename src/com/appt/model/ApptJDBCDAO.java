@@ -35,18 +35,18 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO APPOINTMENT (apptno,memno,sessionno,seqno,symdesc,symphoto,optstate) "
-			+ "VALUES (to_char(sysdate,'yyyymmdd')||'-'||LPAD(to_char(APPOINTMENT_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO APPOINTMENT (apptno,memno,petNo,sessionno,seqno,symdesc,symphoto,optstate) "
+			+ "VALUES (to_char(sysdate,'yyyymmdd')||'-'||LPAD(to_char(APPOINTMENT_SEQ.NEXTVAL), 6, '0'), ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT apptno,memno,sessionno,seqno,symdesc,symphoto,optstate FROM APPOINTMENT order by apptno";
+			"SELECT apptno,memno,petNo,sessionno,seqno,symdesc,symphoto,optstate FROM APPOINTMENT order by apptno";
 	
-	private static final String GET_ALL_STMT2 = 
-			"SELECT MEMNAME,to_char(optDate,'yyyy-mm-dd')optDate,OPTSESSION,seqno,symdesc,symphoto,optstate "+
-			"FROM APPOINTMENT "+
-			"JOIN OPTSESSION ON APPOINTMENT.sessionNo = OPTSESSION.sessionNo "+
-            "JOIN MEMBER ON APPOINTMENT.MEMNO = MEMBER.MEMNO "+
-            "where OPTDATE = to_date(?, 'yyyy-mm-dd') and OPTSESSION = ? "+
-            "order by seqno";
+//	private static final String GET_ALL_STMT2 = 
+//			"SELECT MEMNAME,to_char(optDate,'yyyy-mm-dd')optDate,OPTSESSION,seqno,petNo,symdesc,symphoto,optstate "+
+//			"FROM APPOINTMENT "+
+//			"JOIN OPTSESSION ON APPOINTMENT.sessionNo = OPTSESSION.sessionNo "+
+//            "JOIN MEMBER ON APPOINTMENT.MEMNO = MEMBER.MEMNO "+
+//            "where OPTDATE = to_date(?, 'yyyy-mm-dd') and OPTSESSION = ? "+
+//            "order by seqno";
 
 	
 	
@@ -55,9 +55,9 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 	private static final String UPDATESTATE = 
 			"UPDATE APPOINTMENT set optstate= ? where apptno = ?";
 	
-	//以下兩個用不到
+
 	private static final String GET_ONE_STMT = 
-			"SELECT apptno,memno,sessionno,seqno,symdesc,symphoto,optstate FROM APPOINTMENT where apptno = ?";
+			"SELECT apptno,memno,petNo,sessionno,seqno,symdesc,symphoto,optstate FROM APPOINTMENT where apptno = ?";
 	private static final String DELETE = 
 			"DELETE FROM APPOINTMENT where apptno = ?";
 	
@@ -74,11 +74,12 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, apptVO.getMemno());
-			pstmt.setString(2, apptVO.getSessionno());
-			pstmt.setInt(3, apptVO.getSeqno());
-			pstmt.setString(4, apptVO.getSymdesc());
-			pstmt.setBytes(5, apptVO.getSymphoto());
-			pstmt.setInt(6, apptVO.getOptstate());
+			pstmt.setString(2, apptVO.getPetNo());
+			pstmt.setString(3, apptVO.getSessionno());	
+			pstmt.setInt(4, apptVO.getSeqno());
+			pstmt.setString(5, apptVO.getSymdesc());
+			pstmt.setBytes(6, apptVO.getSymphoto());
+			pstmt.setInt(7, apptVO.getOptstate());
 
 			pstmt.executeUpdate();
 			
@@ -310,6 +311,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 				apptVO = new ApptVO();
 				apptVO.setApptno(rs.getString("apptno"));
 				apptVO.setMemno(rs.getString("memno"));
+				apptVO.setPetNo(rs.getString("petNo"));
 				apptVO.setSessionno(rs.getString("sessionno"));
 				apptVO.setSeqno(rs.getInt("seqno"));
 				apptVO.setSymdesc(rs.getString("symdesc"));
@@ -362,7 +364,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 		try {
 			
 			con = ds.getConnection();
-			String finalSQL = "SELECT apptno,memName,docname,to_char(optDate,'yyyy-mm-dd')optDate,optSession,seqno,symdesc,symphoto,optstate "+
+			String finalSQL = "SELECT apptno,memName,docname,to_char(optDate,'yyyy-mm-dd')optDate,optSession,seqno,petNo,symdesc,symphoto,optstate "+
 					"FROM APPOINTMENT "+
 					"JOIN OPTSESSION ON APPOINTMENT.sessionNo = OPTSESSION.sessionNo "+
 		            "JOIN MEMBER ON APPOINTMENT.MEMNO = MEMBER.MEMNO "+
@@ -381,6 +383,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 				apptVO.setOptDate(rs.getDate("optDate"));
 				apptVO.setDocname(rs.getString("docname"));
 				apptVO.setOptSession(rs.getString("optSession"));
+				apptVO.setPetNo(rs.getString("petNo"));
 				apptVO.setSeqno(rs.getInt("seqno"));
 				apptVO.setSymdesc(rs.getString("symdesc"));
 				apptVO.setSymphoto(rs.getBytes("symphoto"));
@@ -418,65 +421,7 @@ public class ApptJDBCDAO implements ApptDAO_interface {
 		return list;
 	}
 	
-	@Override
-	public ApptVO getApptInfo(String optDate,String optSession) {
-//		List<ApptVO> list = new ArrayList<ApptVO>();
-		
-		ApptVO apptVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;	
-		ResultSet rs = null;
-			
-		try {
-			
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STMT2);
-			pstmt.setString(1, optDate);
-			pstmt.setString(2, optSession);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				// apptVo �]�٬� Domain objects
-				apptVO = new ApptVO();
-				apptVO.setMemno(rs.getString("memname"));
-				apptVO.setOptDate(rs.getDate("optDate"));
-				apptVO.setOptSession(rs.getString("optSession"));
-				apptVO.setSeqno(rs.getInt("seqno"));
-				apptVO.setSymdesc(rs.getString("symdesc"));
-				apptVO.setSymphoto(rs.getBytes("symphoto"));
-				apptVO.setOptstate(rs.getInt("optstate"));
-//				list.add(apptVO); // Store the row in the list
-			}
-			// Handle any driver errors
-					} catch (SQLException se) {
-						throw new RuntimeException("A database error occured. "
-								+ se.getMessage());
-						// Clean up JDBC resources
-					} finally {
-						if (rs != null) {
-							try {
-								rs.close();
-							} catch (SQLException se) {
-								se.printStackTrace(System.err);
-							}
-						}
-						if (pstmt != null) {
-							try {
-								pstmt.close();
-							} catch (SQLException se) {
-								se.printStackTrace(System.err);
-							}
-						}
-						if (con != null) {
-							try {
-								con.close();
-							} catch (Exception e) {
-								e.printStackTrace(System.err);
-							}
-						}
-					}
-					return apptVO;
-	}
+	
 	
 	public static void main(String[] args) {
 		

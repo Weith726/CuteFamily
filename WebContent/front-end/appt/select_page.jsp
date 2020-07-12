@@ -28,6 +28,7 @@ String jsonStr3 = gson.toJson(d03);
 
 <html>
 <head>
+<%@ include file="../head.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -72,14 +73,21 @@ font-size:28px;
 .sel{
 font-size:28px;
 }
+
+.allsel{
+margin:0px auto;
+
+}
+
 </style>
+
 
 
 </head>
 
 <body>
 
-
+<%@ include file="../header.jsp"%>
 
 
 	<span class="mainTitle">預約</span>
@@ -90,11 +98,11 @@ font-size:28px;
 <FORM METHOD="post" ACTION="dispOpt.jsp">
 
 
-
+<div class="allsel">
 
 <div class="sel">科別<br>
 	<select id="divno" class="divno">
-		<option value="ALL">請選擇
+		<option value="ALL" selected>請選擇
 		<option value="D01">犬科</option>
 		<option value="D02">貓科</option>
 		<option value="D03">其他科</option>
@@ -111,10 +119,16 @@ font-size:28px;
 		<input class="submit" type="submit" value="查詢">
 	</FORM>
 
-
-
+</div>
+<%@ include file="../footer.jsp"%>
 </body>
 <script type="text/javascript">
+$(function() {
+	$( "#divno" ).trigger( "onchange" );
+});
+	
+
+
 	//json轉成 JS json陣列
 	var json1 = '<%=jsonStr1%>'
 	var json2 = '<%=jsonStr2%>'
@@ -123,6 +137,7 @@ font-size:28px;
 	var divno =  document.getElementById("divno");
 	var str ='';
 	//option發生改變
+	
 	divno.onchange=function (){
 			str = divno.value;
 			if(str==='D01'){

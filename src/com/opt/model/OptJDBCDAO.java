@@ -42,6 +42,9 @@ public class OptJDBCDAO implements OptDAO_interface {
 	private static final String UPDATE = "UPDATE OPTSESSION set docNo=?,optDate=?,optSession=?,"
 			+ "currentCount=?,maximum=? where sessionNo = ?";
 	
+	private static final String UPDATECURRENTCOUNT = "UPDATE OPTSESSION set "
+			+ "currentCount=? where sessionNo = ?";
+
 	private static final String FIND_SESSIONNO = "SELECT sessionNo FROM OPTSESSION where docNo = ? AND optDate = ? AND optSession = ?";
 
 	@Override
@@ -107,6 +110,48 @@ public class OptJDBCDAO implements OptDAO_interface {
 			pstmt.setInt(4, optVO.getCurrentCount());
 			pstmt.setInt(5, optVO.getMaximum());
 			pstmt.setString(6, optVO.getSessionNo());
+
+			pstmt.executeUpdate();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	
+	@Override
+	public void updateCurrentCount(OptVO optVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATECURRENTCOUNT);
+
+			pstmt.setInt(1, optVO.getCurrentCount());
+			pstmt.setString(2, optVO.getSessionNo());
 
 			pstmt.executeUpdate();
 			// Handle any driver errors

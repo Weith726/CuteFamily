@@ -24,21 +24,21 @@ String jsonStr = gson.toJson(list);
 
 System.out.println("Object to JSON: " + jsonStr);
 
-pageContext.setAttribute("list", jsonStr);
+pageContext.setAttribute("jsonStr", jsonStr);
+
+
 %>
 
 
 
 <html>
 <head>
-
+<%@ include file="../head.jsp"%>
 
 <link href='../fullcalendar/main.css' rel='stylesheet' />
 <script src='../fullcalendar/main.js'></script>
 <script src='../fullcalendar/locales-all.js'></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
+
 
 <script>
 	var eventDate = '';
@@ -76,7 +76,9 @@ pageContext.setAttribute("list", jsonStr);
       
       eventClick: function(arg) {
     	  var str = arg.event.id;
-    	  $.post("apptStart.do?action=addAppt&sessionNo="+str+"");
+    	  //JQ post寫法，無法使用，但可接收後端處理資料
+//     	  $.post("apptStart.do?action=addAppt&sessionNo="+str+"");
+    	  window.location.href='apptStart.do?action=addAppt&sessionNo='+str+'';
         
     	  console.log(arg.event.start);
     	  console.log(arg.event.title);	  
@@ -85,7 +87,7 @@ pageContext.setAttribute("list", jsonStr);
       },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
-      events: ${list}
+      events: ${jsonStr}
 //       events: [{'title':123,'start':'2020-07-02'}]
 
     });
@@ -109,7 +111,7 @@ pageContext.setAttribute("list", jsonStr);
 </head>
 
 <body>
-	
+<%@ include file="../header.jsp"%>	
 
 
 
@@ -119,7 +121,7 @@ pageContext.setAttribute("list", jsonStr);
 
 
 	
-
+<%@ include file="../footer.jsp"%>
 </body>
 
 
