@@ -82,7 +82,7 @@ pageContext.setAttribute("list", jsonStr);
   <style>
   
   #calendar {
-	    max-width: 1400px;
+	    max-width: 1100px;
 	    margin: 0 auto;
   </style>
   
@@ -97,28 +97,21 @@ pageContext.setAttribute("list", jsonStr);
 
 	<hr class="mainTitlehr">
 
-
-	<div>
-		<a href='addOptSession.jsp'>開始排班</a>
+	
+	<div >
+	<a style="font-size:24px" class="btn btn-primary" href="addOptSession.jsp" role="button">開始排班</a>
 	</div>
 	<br>
 
-<!-- 	依日期查詢: -->
-<!-- 	<br> -->
-	
 
-<!-- 	<div> -->
-<!-- 		<a href='listByDate.jsp'>List</a> all Emps. -->
-<!-- 	</div> -->
-
-	<FORM METHOD="post" ACTION="opt.do">
-		<b>選擇醫生:</b> <select size="1" name="sessionNo">
-			<c:forEach var="optVO" items="${optSvc.all}">
-				<option value="${optVO.sessionNo}">${optVO.sessionNo}
-			</c:forEach>
-		</select> <input type="hidden" name="action" value="getOne_For_Display">
-		<input type="submit" value="送出">
-	</FORM>
+<!-- 	<FORM METHOD="post" ACTION="opt.do"> -->
+<!-- 		<b>選擇醫生:</b> <select size="1" name="sessionNo"> -->
+<%-- 			<c:forEach var="optVO" items="${optSvc.all}"> --%>
+<%-- 				<option value="${optVO.sessionNo}">${optVO.sessionNo} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select> <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 		<input type="submit" value="送出"> -->
+<!-- 	</FORM> -->
 
 
 

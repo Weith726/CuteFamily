@@ -34,22 +34,11 @@ String jsonStr3 = gson.toJson(d03);
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
 <style type="text/css">
-.select {
-	/* border-style: solid; */
-	/*   border-color: red; */
-	width: 900px;
-}
 
-.select td {
-	/* border-style: solid; */
-	/*   border-color: red; */
-	
-}
+.mainTitle{
+font-size:40px;
+font-family: 'Noto Sans TC', sans-serif;
 
-.select th {
-	text-align: right;
-	/* border-style: solid; */
-	/*   border-color: red; */
 }
 
 /* form{ */
@@ -66,7 +55,7 @@ width: 300px;
 font-size:28px;
 }
 
-.submit{
+#startBtn{
 font-size:28px;
 }
 
@@ -78,6 +67,12 @@ font-size:28px;
 margin:0px auto;
 
 }
+  .main {
+	width: 80%;
+	margin: 0 auto;
+	font-family: 'Noto Sans TC', sans-serif;
+}
+
 
 </style>
 
@@ -88,9 +83,9 @@ margin:0px auto;
 <body>
 
 <%@ include file="../header.jsp"%>
+	<div class="main">
 
-
-	<span class="mainTitle">預約</span>
+	<span class="mainTitle">門診預約</span>
 
 
 	<hr class="mainTitlehr">
@@ -98,10 +93,10 @@ margin:0px auto;
 <FORM METHOD="post" ACTION="dispOpt.jsp">
 
 
-<div class="allsel">
+<div class="allsel" style="width: 100%" align="center">
 
 <div class="sel">科別<br>
-	<select id="divno" class="divno">
+	<select id="divno" class="divno" name="divno">
 		<option value="ALL" selected>請選擇
 		<option value="D01">犬科</option>
 		<option value="D02">貓科</option>
@@ -113,13 +108,17 @@ margin:0px auto;
 
 
 	</select></div>
-	
-
+	<br>
+	<br>
 <!-- <input type="hidden" name="action" value="displayOpt">  -->
-		<input class="submit" type="submit" value="查詢">
+		
+		<button type="submit" class="btn btn-primary" id="startBtn">開始預約</button>
 	</FORM>
 
 </div>
+
+</div>
+
 <%@ include file="../footer.jsp"%>
 </body>
 <script type="text/javascript">

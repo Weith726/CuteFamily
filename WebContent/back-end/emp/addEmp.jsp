@@ -183,8 +183,8 @@ th, td {
 
 
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="送出新增">
+		<br> <input type="hidden" name="action" value="insert"> 
+		<button type="submit" class="btn btn-primary">送出新增</button>
 	</FORM>
 	 <span id="lblMsg"></span>
 	

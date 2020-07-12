@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.opt.model.*"%>
+<%@ page import="com.doc.model.*"%>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.google.gson.GsonBuilder" %>
 <%@ page import="com.google.gson.JsonArray" %>
@@ -13,7 +14,10 @@
 
 <%
 String docno = request.getParameter("doc");
+String divno = request.getParameter("divno");
 
+
+pageContext.setAttribute("docno", docno);
 System.out.print(docno);
 
 
@@ -51,7 +55,7 @@ pageContext.setAttribute("jsonStr", jsonStr);
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth'//,timeGridWeek,timeGridDay'
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
       hiddenDays: [0],
       slotMinTime: "09:00:00",
@@ -59,20 +63,10 @@ pageContext.setAttribute("jsonStr", jsonStr);
       locale: 'zh-tw',
       initialDate: new Date(),
       navLinks: true, // can click day/week names to navigate views
-      selectable: true,
+//       selectable: true,
       selectMirror: true,
 
-      select: function(arg) {
-        var title = prompt('Event Title:');
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            allDay: arg.allDay
-          })
-        }
-        calendar.unselect()
-      },
+     
       
       eventClick: function(arg) {
     	  var str = arg.event.id;
@@ -104,6 +98,18 @@ pageContext.setAttribute("jsonStr", jsonStr);
   #calendar {
 	    max-width: 1000px;
 	    margin: 0 auto;
+	    }
+  .calendarTitle{
+  		text-align:center;
+  		font-size:40px;
+  		font-family: 'Noto Sans TC', sans-serif;
+  
+  }
+  .main {
+	width: 80%;
+	margin: 0 auto;
+}
+	    
   </style>
   
 
@@ -113,12 +119,22 @@ pageContext.setAttribute("jsonStr", jsonStr);
 <body>
 <%@ include file="../header.jsp"%>	
 
+	<div class="main">
 
-
-
+	<div class="calendarTitle">
+		<jsp:useBean id="docSvc" scope="page" class="com.doc.model.DocService" />
+			<c:forEach var="docVO" items="${docSvc.all}">
+				<c:if test="${docno==docVO.docno}"> 
+ 				${(docVO.docname)} 醫師 門診值班表
+ 				</c:if> 
+			</c:forEach> 
+	
+	</div>
+	
+	<hr class="mainTitlehr">
 	<div id='calendar'></div>
 
-
+	</div>
 
 	
 <%@ include file="../footer.jsp"%>

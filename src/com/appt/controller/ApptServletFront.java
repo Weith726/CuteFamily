@@ -54,7 +54,6 @@ public class ApptServletFront extends HttpServlet {
 			MemberVO member=mSvc.getOneEmp("M0003");
 			session.setAttribute("member",member);
 			
-//			session.setAttribute("memNO", "M0001");
 			
 			System.out.println(optVO.getOptSession());
 			
@@ -67,13 +66,12 @@ public class ApptServletFront extends HttpServlet {
 				failureView.forward(req, res);
 			}	
 	}
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+		if ("insert".equals(action)) { // 來自dispOpt.jsp的請求  
         	
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
@@ -97,6 +95,13 @@ public class ApptServletFront extends HttpServlet {
 				in.close();
 				
 				
+				OptVO optVO = new OptVO();
+				OptService succeess = new OptService();
+				optVO = succeess.getOneOptSession(sessionNo);
+				
+				req.setAttribute("optVO", optVO);
+				
+				
 				ApptVO apptVO = new ApptVO();
 				apptVO.setMemno(memNo);
 				apptVO.setPetNo(petNo);
@@ -108,21 +113,23 @@ public class ApptServletFront extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				ApptService apptSvc = new ApptService();
-				apptVO = apptSvc.addAppt(memNo, petNo, sessionNo, seqNo, symdesc, symphoto, optState);
+				apptSvc.addAppt(memNo, petNo, sessionNo, seqNo, symdesc, symphoto, optState);
 				
 				//更新門診時段人數
 				OptService optSvc = new OptService();
 				optSvc.updateCurrentCount(seqNo, sessionNo);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				
-				
-				String url = "addAppt.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//				req.removeAttribute("optVO");
+//				String url = "/front-end/appt/apptStart.do?"+requestPara;
+//				System.out.println(url);
+				RequestDispatcher successView = req.getRequestDispatcher("apptSuccess.jsp"); // 新增成功後轉交
 				successView.forward(req, res);	
 				
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
+				System.out.println("例外被執行");
 				errorMsgs.add(e.getMessage()+"其他的錯誤");
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("addAppt.jsp");

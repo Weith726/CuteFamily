@@ -46,6 +46,15 @@ html, body {
 	background-color: #373737;
 }
 
+.logout{
+	padding-top: 2px;
+	max-width:400px;
+	font-size: 30px;
+	height: 75px;
+	font-family: 'Noto Sans TC', sans-serif;
+	
+}
+
 .container-fluid {
 	position: relative;
 	top: 80px;
@@ -57,34 +66,35 @@ html, body {
 	width: 60px;
 	height: 60px;
 	border-radius: 30px;
-	margin-left: 5px;
-	
-
-
+/* 	margin-left: 5px; */
 
 }
 
-/*會員登入後職稱與姓名*/
-.mem-name {
+
+
+.navbar .btn{
+	
 	font-size: 22px;
-	margin-left:10px;
+	color: #00E8E8;
+	margin-bottom: 7px;
+	
 }
 
 /*右上角功能選單*/
 .action {
 	font-family: 'Noto Sans TC', sans-serif;
-	font-size: 20px;
 	color: #00E8E8;
-	width: 250px;
-	margin-bottom: 0px;
+	padding-bottom: 20px;
+	font-size: 22px;
+	max-width: 75%;
+	
 }
 
-.action form {
-	display: inline;
-	float: right;
-	margin-top: 13px;
-
+.logoutForm{
+	
+	display:inline;
 }
+
 
 /*側邊欄*/
 .aside {

@@ -12,8 +12,25 @@
 <html>
 <head>
 
-
-
+<style>
+.indexMain {
+	font-family: 'Noto Sans TC', sans-serif;
+	text-align:center;
+	font-size:50px;
+	padding: 20px 10px 20px 10px;
+	float: left;
+	min-height: 900px;
+	background: rgba(255, 255, 255, 0.90);
+	border-radius: 7px;
+	margin-top: 8px;
+	margin-bottom: 108px;
+	right: 8px;
+}
+.welcome{
+font-size:80px;
+font-family: 'Pacifico';
+}
+</style>
 <link rel="stylesheet" href="style.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,20 +71,17 @@
 
 
 
-		<div class="action" id="navbarMenu">
-
-
-			<img src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVONav.empID}" class="mem-pic">
+		<div class="logout">
+	<img src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVONav.empID}" class="mem-pic">
 			<span class="mem-name"><%=empVONav.getEmpName()%></span> 
-
-
-			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/back-end/login.do">
-				<input type="submit" value="登出"> <input type="hidden"
-					name="action" value="logout">
-			</FORM>
-
-
+		<FORM METHOD="post"
+			ACTION="<%=request.getContextPath()%>/back-end/login.do" class="logoutForm">
+			<%-- 				<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/login.html">登出</a> --%>
+<!-- 			<input type="submit" value="登出"> -->
+			<button type="submit" class="btn btn-link">登出</button>
+			
+			<input type="hidden" name="action" value="logout">
+		</FORM>
 		</div>
 
 
@@ -222,9 +236,10 @@
 			</div>
 
 
-			<div class="main col-xl-10">
-
-				<h1>Welcome</h1>
+			<div class="indexMain col-xl-10">
+			    <div class="welcome">Welcome </div>
+				<div><%=empVONav.getEmpName()%></div>
+				歡迎使用後台管理系統
 			</div>
 
 			<footer class="Footer">Copyright © 萌寵家族 Cute Family </footer>

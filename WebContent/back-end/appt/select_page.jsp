@@ -94,7 +94,7 @@ text-align: right;
 				<!--        </td> -->
 		</table>
 		<input type="hidden" name="action" value="listAppt"> 
-		<input class="submit" type="submit" value="¬d¸ß">
+		<button type="submit" class="btn btn-primary">¬d¸ß</button>
 	</FORM>
 	
 	<%if (request.getAttribute("listAppt")!=null){%>

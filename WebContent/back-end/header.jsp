@@ -18,23 +18,19 @@
 
 
 
-	<div class="action" id="navbarMenu">
 
-
-		<img src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVONav.empID}" class="mem-pic">
+	<div class="logout">
+	<img src="<%= request.getContextPath()%>/back-end/emp/img.do?empID=${empVONav.empID}" class="mem-pic">
 			<span class="mem-name"><%=empVONav.getEmpName()%></span> 
-
-
 		<FORM METHOD="post"
-			ACTION="<%=request.getContextPath()%>/back-end/login.do">
+			ACTION="<%=request.getContextPath()%>/back-end/login.do" class="logoutForm">
 			<%-- 				<a class="dropdown-item" href="<%=request.getContextPath()%>/back-end/login.html">登出</a> --%>
-			<input type="submit" value="登出"> <input type="hidden"
-				name="action" value="logout">
+<!-- 			<input type="submit" value="登出"> -->
+			<button type="submit" class="btn btn-link">登出</button>
+			
+			<input type="hidden" name="action" value="logout">
 		</FORM>
-		
-		
-	</div>
-
+		</div>
 
 
 </nav>
