@@ -10,7 +10,7 @@ public class AuthService {
 	private AuthDAO_interface dao;
 
 	public AuthService() {
-		dao = new AuthJDBCDAO();
+		dao = new AuthDAO();
 	}
 
 	public AuthVO addAuth(Integer empID,String bgFuncNo) {

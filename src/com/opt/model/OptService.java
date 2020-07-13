@@ -10,7 +10,7 @@ public class OptService {
 	private OptDAO_interface dao;
 
 	public OptService() {
-		dao = new OptJDBCDAO();
+		dao = new OptDAO();
 	}
 
 	public OptVO addOptSession(String docNo,java.sql.Date optDate,String optSession,

@@ -1,16 +1,26 @@
 package com.func.model;
 
 import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 
+public class FuncDAO implements FuncDAO_interface {
 
-
-public class FuncJDBCDAO implements FuncDAO_interface{
-	
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "TEAM3";
-	String passwd = "123456";
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO BACKGROUNDFUNC (bgFuncNo,bgFuncName) VALUES (?, ?)";
 
@@ -20,7 +30,6 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 
 	private static final String UPDATE = "UPDATE BACKGROUNDFUNC set bgFuncName=? where bgFuncNo = ?";
 
-
 	@Override
 	public void insert(FuncVO funcVO) {
 		// TODO Auto-generated method stub
@@ -29,18 +38,14 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, funcVO.getBgFuncNo());
 			pstmt.setString(2, funcVO.getBgFuncName());
 
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -60,7 +65,7 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -71,18 +76,14 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, funcVO.getBgFuncName());
 			pstmt.setString(2, funcVO.getBgFuncNo());
 
 			pstmt.executeUpdate();
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any driver errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -102,7 +103,7 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -112,18 +113,13 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setString(1, bgFuncNo);
 
 			pstmt.executeUpdate();
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any driver errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -143,9 +139,10 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 				}
 			}
 		}
-		
+
 	}
-	//功能清單不做單一查詢
+
+	// 功能清單不做單一查詢
 	@Override
 	public FuncVO findByPrimaryKey(String bgFuncNo) {
 		// TODO Auto-generated method stub
@@ -164,8 +161,7 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -174,13 +170,10 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 				funcVO = new FuncVO();
 				funcVO.setBgFuncNo(rs.getString("bgFuncNo"));
 				funcVO.setBgFuncName(rs.getString("bgFuncName"));
-				
+
 				list.add(funcVO); // Store the row in the list
 			}
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any driver errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -209,35 +202,6 @@ public class FuncJDBCDAO implements FuncDAO_interface{
 		}
 		return list;
 	}
+
 	
-	public static void main(String[] args) {
-
-		FuncJDBCDAO dao = new FuncJDBCDAO();
-
-		// 新增
-//		FuncVO funcVO = new FuncVO();
-//		funcVO.setBgFuncNo("E1");
-//		funcVO.setBgFuncName("員工管理");
-//		dao.insert(funcVO);
-
-		// 修改
-//		FuncVO funcVO = new FuncVO();
-//		funcVO.setBgFuncNo("E1");
-//		funcVO.setBgFuncName("員工開除");
-//		dao.update(funcVO);
-
-		// 刪除
-//		dao.delete("E1");
-
-
-
-		// 查詢
-		List<FuncVO> list = dao.getAll();
-		for (FuncVO aFunc : list) {
-			System.out.print(aFunc.getBgFuncNo() + ",");
-			System.out.print(aFunc.getBgFuncName());
-			System.out.println();
-		}
-	}
-
 }

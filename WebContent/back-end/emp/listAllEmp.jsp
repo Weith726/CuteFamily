@@ -10,11 +10,8 @@
 	List<EmpVO> list = empSvc.getAll();
 	pageContext.setAttribute("list", list);
 	
-	
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 	
-	
-
 	
 %>
 
@@ -58,7 +55,6 @@ img {
 	font-size: 26px;
 	padding: 5px 20px;
 	margin-bottom: 20px;
-	box-shadow: 0px 0px 0px 5px darkred inset;
 }
 
 
@@ -111,7 +107,7 @@ img {
 
 		<%@ include file="page1.file"%>
 
-		<button type="button" class="btn btn-danger" id="addbtn" onclick="location.href='addEmp.jsp'">新增員工</button>	
+		<button type="button" class="btn btn-success" id="addbtn" onclick="location.href='addEmp.jsp'">新增員工</button>	
 			
 		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">

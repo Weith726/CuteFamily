@@ -69,19 +69,13 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="emp.do" name="form1"
-		enctype="multipart/form-data">
-		<table>
+	<FORM METHOD="post" ACTION="emp.do" name="form1" enctype="multipart/form-data">
+		<table class="table table-striped">
 
-		
 			<tr>
-				<th>員工編號<font color=red><b>*</b></font></th>
+				<th>員工編號<font color=red></font></th>
 				<td><%=empVO.getEmpID()%></td>
 			</tr>
-			
-			
-		
-
 			<tr>
 				<th>員工姓名</th>
 				<td><input type="TEXT" name="empName" size="10" maxlength="20"
@@ -94,7 +88,7 @@ th, td {
 				<input type="radio" id="male" name="empGender" value="男" ${(empVO.empGender=='男')?'checked':'' }> 
 				<label for="male">男</label> 
 				<input type="radio" id="female" name="empGender" value="女"  ${(empVO.empGender=='女')?'checked':'' }> 
-				<label for="female">女</label><br>
+				<label for="female">女</label>
 				</td>
 			</tr>
 			
@@ -170,15 +164,10 @@ th, td {
 				<td>
 			</tr>
 
-
-
-
-
-
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="empID" value="<%=empVO.getEmpID()%>"> <input
-			type="submit" value="送出修改">
+		<input type="hidden" name="action" value="update"> 
+		<input type="hidden" name="empID" value="<%=empVO.getEmpID()%>"> 
+		<button type="submit" class="btn btn-primary">送出修改</button>
 	</FORM>
 	
 	

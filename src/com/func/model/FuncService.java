@@ -8,7 +8,7 @@ public class FuncService {
 	private FuncDAO_interface dao;
 
 	public FuncService() {
-		dao = new FuncJDBCDAO();
+		dao = new FuncDAO();
 	}
 
 	public FuncVO addFunc(String bgFuncNo, String bgFuncName) {

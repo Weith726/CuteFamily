@@ -11,7 +11,7 @@ public class ApptService {
 	private ApptDAO_interface dao;
 
 	public ApptService() {
-		dao = new ApptJDBCDAO();
+		dao = new ApptDAO();
 	}
 
 	public ApptVO addAppt(String memno, String petNo,String sessionno, Integer seqno,

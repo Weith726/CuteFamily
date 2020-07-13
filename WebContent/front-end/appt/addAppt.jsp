@@ -53,7 +53,15 @@ img {
 .mainTitle {
 	font-size: 32px;
 }
+.memTable{
+width: 100%;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 1px solid #CCCCFF;
+	font-size: 24px;
 
+}
 .memTable th {
 	width: 300px;
 }
@@ -186,7 +194,7 @@ img {
 				<tr>
 					<th>¯gª¬´y­z</th>
 					<td><textarea id="symdesc" name="symdesc" rows="4" cols="50"
-							maxlength="100"></textarea></td>
+							maxlength="33"></textarea></td>
 				</tr>
 
 				<tr>

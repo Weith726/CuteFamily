@@ -85,7 +85,7 @@ th, td {
 
 	<FORM METHOD="post" ACTION="emp.do" name="form1" id="form1"
 		enctype="multipart/form-data">
-		<table>
+		<table class="table table-striped">
 			
 
 <!-- 密碼不該讓管理者輸入 -->
@@ -98,7 +98,7 @@ th, td {
 		
 			<tr>
 				<th>員工姓名</th>
-				<td><input type="TEXT" name="empName" size="10" maxlength="20"
+				<td><input type="TEXT" name="empName" size="20" maxlength="20"
 					value="<%=(empVO == null) ? "" : empVO.getEmpName()%>" /></td>
 			</tr>
 
@@ -131,13 +131,13 @@ th, td {
 
 			<tr>
 				<th>職位</th>
-				<td><input type="TEXT" name="empJob" size="10" maxlength="6"
+				<td><input type="TEXT" name="empJob" size="20" maxlength="6"
 					value="<%=(empVO == null) ? "" : empVO.getEmpJob()%>" /></td>
 			</tr>
 
 			<tr>
 				<th>電話</th>
-				<td><input type="TEXT" name="empPhone" size="11" maxlength="11"
+				<td><input type="TEXT" name="empPhone" size="20" maxlength="11"
 					value="<%=(empVO == null) ? "" : empVO.getEmpPhone()%>" /></td>
 			</tr>
 			<tr>
