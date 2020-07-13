@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.appt.model.ApptDAO_interface;
-import com.emp.model.EmpVO;
+import com.appt.model.ApptVO;
 
 public class ApptService {
 
@@ -27,6 +27,17 @@ public class ApptService {
 		apptVO.setSymphoto(symphoto);
 		apptVO.setOptstate(optstate);
 		dao.insert(apptVO);
+
+		return apptVO;
+	}
+	
+	public ApptVO cancelAppt(String apptno, Integer optstate) {
+
+		ApptVO apptVO = new ApptVO();
+
+		apptVO.setApptno(apptno);
+		apptVO.setOptstate(optstate);
+		dao.cancel(apptVO);
 
 		return apptVO;
 	}
@@ -72,6 +83,10 @@ public class ApptService {
 	
 	public List<ApptVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
+	}
+	
+	public List<ApptVO> getQueue(Map<String, String[]> map) {
+		return dao.getQueue(map);
 	}
 	
 	

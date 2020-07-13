@@ -1,108 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-					http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
-id="WebApp_ID" 
-version="4.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+					http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
 
-  <display-name>EA101G3</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  <resource-ref>
-    <description>DB Connection</description>
-    <res-ref-name>jdbc/TestDB3</res-ref-name>
-    <res-type>javax.sql.DataSource</res-type>
-    <res-auth>Container</res-auth>
-  </resource-ref>
-  <servlet>
-    <servlet-name>EmpServlet</servlet-name>
-    <servlet-class>com.emp.controller.EmpServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EmpServlet</servlet-name>
-    <url-pattern>/back-end/emp/emp.do</url-pattern>
-  </servlet-mapping>
-  
-    <servlet>
-    <servlet-name>EmpShowImg</servlet-name>
-    <servlet-class>com.emp.controller.EmpShowImg</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EmpShowImg</servlet-name>
-    <url-pattern>/back-end/emp/img.do</url-pattern>
-  </servlet-mapping>
-  
-      <servlet>
-    <servlet-name>ApptShowImg</servlet-name>
-    <servlet-class>com.appt.controller.ApptShowImg</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApptShowImg</servlet-name>
-    <url-pattern>/back-end/appt/img.do</url-pattern>
-  </servlet-mapping>
-  
-     <servlet>
-    <servlet-name>LoginHandler</servlet-name>
-    <servlet-class>com.emp.controller.LoginHandler</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LoginHandler</servlet-name>
-    <url-pattern>/back-end/login.do</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>OptServlet</servlet-name>
-    <servlet-class>com.opt.controller.OptServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>OptServlet</servlet-name>
-    <url-pattern>/back-end/opt/opt.do</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>ApptServlet</servlet-name>
-    <servlet-class>com.appt.controller.ApptServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApptServlet</servlet-name>
-    <url-pattern>/back-end/appt/appt.do</url-pattern>
-  </servlet-mapping>
-  
-   <servlet>
-    <servlet-name>ApptServletFront</servlet-name>
-    <servlet-class>com.appt.controller.ApptServletFront</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApptServletFront</servlet-name>
-    <url-pattern>/front-end/appt/apptStart.do</url-pattern>
-  </servlet-mapping>
-  
- 
+	<display-name>EA101G3</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/TestDB3</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 
-  
-   <filter>
-    <filter-name>loginFilter</filter-name>
-    <filter-class>filters.LoginFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>loginFilter</filter-name>
-    <url-pattern>/back-end/emp/*</url-pattern>
-    <url-pattern>/back-end/opt/*</url-pattern>
-    <url-pattern>/back-end/appt/*</url-pattern>
-    <url-pattern>/back-end/index.jsp</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-    <dispatcher>FORWARD</dispatcher>
-    <dispatcher>INCLUDE</dispatcher>
-    <dispatcher>ERROR</dispatcher>
-    <dispatcher>ASYNC</dispatcher>
-  </filter-mapping>
- 
+	<!-- 以下韋誌的 -->
+
+	<servlet>
+		<servlet-name>EmpServlet</servlet-name>
+		<servlet-class>com.emp.controller.EmpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpServlet</servlet-name>
+		<url-pattern>/back-end/emp/emp.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>EmpShowImg</servlet-name>
+		<servlet-class>com.emp.controller.EmpShowImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmpShowImg</servlet-name>
+		<url-pattern>/back-end/emp/img.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ApptShowImg</servlet-name>
+		<servlet-class>com.appt.controller.ApptShowImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ApptShowImg</servlet-name>
+		<url-pattern>/back-end/appt/img.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginHandler</servlet-name>
+		<servlet-class>com.emp.controller.LoginHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginHandler</servlet-name>
+		<url-pattern>/back-end/login.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>OptServlet</servlet-name>
+		<servlet-class>com.opt.controller.OptServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OptServlet</servlet-name>
+		<url-pattern>/back-end/opt/opt.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ApptServlet</servlet-name>
+		<servlet-class>com.appt.controller.ApptServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ApptServlet</servlet-name>
+		<url-pattern>/back-end/appt/appt.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ApptServletFront</servlet-name>
+		<servlet-class>com.appt.controller.ApptServletFront</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ApptServletFront</servlet-name>
+		<url-pattern>/front-end/appt/apptStart.do</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>filters.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/back-end/emp/*</url-pattern>
+		<url-pattern>/back-end/opt/*</url-pattern>
+		<url-pattern>/back-end/appt/*</url-pattern>
+		<url-pattern>/back-end/index.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+
+	<!-- 以下科達的 -->
+	<servlet>
+		<servlet-name>ApptServlet2</servlet-name>
+		<servlet-class>com.appt.controller.ApptServlet2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ApptServlet2</servlet-name>
+		<url-pattern>/front-end/appt/appt.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>DocServlet</servlet-name>
+		<servlet-class>com.doc.controller.DocServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DocServlet</servlet-name>
+		<url-pattern>/back-end/doc/doc.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DivServlet</servlet-name>
+		<servlet-class>com.div.controller.DivServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DivServlet</servlet-name>
+		<url-pattern>/back-end/div/div.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DivServlet2</servlet-name>
+		<servlet-class>com.div.controller.DivServlet2</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DivServlet2</servlet-name>
+		<url-pattern>/front-end/div/div.do</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>MrServlet</servlet-name>
+		<servlet-class>com.mr.controller.MrServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MrServlet</servlet-name>
+		<url-pattern>/back-end/mr/mr.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DocServlet2</servlet-name>
+		<servlet-class>com.doc.controller.DocServlet2</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DocServlet2</servlet-name>
+		<url-pattern>/front-end/doc/doc.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ShowDocPic</servlet-name>
+		<servlet-class>com.doc.controller.ShowDocPic</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ShowDocPic</servlet-name>
+		<url-pattern>/back-end/doc/ShowDocPic.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ShowSymPhoto</servlet-name>
+		<servlet-class>com.appt.controller.ShowSymPhoto</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ShowSymPhoto</servlet-name>
+		<url-pattern>/front-end/appt/ShowSymPhoto.do</url-pattern>
+	</servlet-mapping>
+
+
+
+
 
 </web-app>

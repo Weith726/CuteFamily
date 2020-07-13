@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Pacifico&family=Righteous&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+/**{
+    margin: 0;
+    padding: 0;
+    }*/
+
+    html,body{
+     height: 100%;
+     background-image: url("images/shiba-inu.jpg");
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-position: center;
+
+   }
+
+   /*上方導覽列*/
+
+
+
+
+
+   .navbar{ 
+
+     height: 80px;
+     font-size: 35px;
+     color: lightcoral;
+     box-shadow: 0px 0px 8px black;
+     background-color: #373737;
+
+
+   } 
+   .container-fluid{ 
+     position: relative;
+     top: 80px;
+     min-height: 100%;
+
+
+
+   }
+
+
+
+
+   /*導覽列標題*/
+
+   .navbarTitle{ 
+     font-family: 'Noto Sans TC', sans-serif;
+
+     /*  margin-left:-140px; */
+     font-size: 34px;
+
+
+   }
+   /*會員登入後照片*/
+   .mem-pic{ 
+     width: 45px;
+     height: 45px;
+     border-radius: 20px;
+     margin-left: 5px;
+   }
+   /*會員登入後職稱與姓名*/
+   .mem-name{ 
+     font-size: 16px;
+     opacity: 0.7;
+
+
+   }
+
+   /*右上角功能選單*/
+   .action .nav-item .nav-link{
+     font-family: 'Noto Sans TC', sans-serif;
+     font-size: 20px;
+     color: #00E8E8;
+
+   }
+
+
+   /*側邊欄*/
+   .aside{ 
+
+
+     line-height: 45px;
+     font-size: 22px;
+     /*background-color: #4A78A8;  */
+     padding-top:15px; 
+     /* background-color: rgba(70,70,80,0.5); */
+     text-shadow: 2px 2px 2px black;
+     min-height: 100%;
+
+   }
+
+   /*側邊欄文字靠左*/
+   .nav .nav-item{ 
+
+     text-align: left;
+
+
+
+   }
+   /*側邊欄內清單*/
+   .nav .nav-item .nav-link{ 
+     letter-spacing: 8px;
+     font-family: 'Noto Sans TC', sans-serif;
+     color: white;
+     opacity: 0.9;
+     border-bottom:dotted;
+     border-width: 2px;
+     border-color: rgba(255,255,255,0.3);
+
+     height:60px;
+     padding-top:10px;
+     overflow:hidden;
+     line-height: 35px;
+     transition: all 0.5s;
+
+   }
+   /*側邊欄內清單(單一功能)*/
+   .nav .nav-item-single a{ 
+     letter-spacing: 8px;
+     font-family: 'Noto Sans TC', sans-serif;
+     color: white;
+     opacity: 0.9;
+     border-bottom:dotted;
+     border-width: 2px;
+     border-color: rgba(255,255,255,0.3);
+     height:50px;
+     line-height: 35px;
+     padding-top:5px;
+   }
+
+   /*側邊欄內清單hover*/
+   .nav .nav-item .nav-link:hover{ 
+     height: 220px;
+     cursor: pointer;
+     background-color: rgba(0, 0, 0, 0.5);
+
+
+   }
+
+
+   /*側邊欄內清單的第二層清單*/
+   .nav-link ul li{
+     padding-top: 5px;
+     display: block;
+     font-size: 17px;
+     letter-spacing: 1px;
+     transition: all 0.8s;
+
+   }
+
+   /*側邊欄內清單的第二層清單連結*/
+
+   .nav-link ul li a{
+
+     color: white;
+
+   }
+
+   /*側邊欄內清單(單一功能)連結*/
+
+   .nav .nav-item-single a{ 
+     letter-spacing: 8px;
+     font-family: 'Noto Sans TC', sans-serif;
+     color: white;
+     opacity: 0.9;
+     border-bottom:dotted;
+     border-width: 2px;
+     border-color: rgba(255,255,255,0.3);
+     height:60px;
+     width:100%;
+     line-height: 35px;
+     padding-top:10px;
+   }
+   /*側邊欄內清單(單一功能)連結hover*/
+   .nav .nav-item-single a:hover{ 
+     cursor: pointer;
+     background-color: rgba(0, 0, 0, 0.5);
+
+
+   }
+
+   /*導覽列圖標*/
+   .icon a{ 
+
+     font-family: 'Pacifico';
+     font-size: 38px;
+     color: lightcoral !important;
+     text-shadow: 1px 0px 2px black;
+
+   }
+
+
+
+
+
+   /*主內容標題*/
+   .mainTitle{
+     letter-spacing: 8px;
+     font-family: 'Noto Sans TC', sans-serif;
+     color: #42454C;
+     font-weight: bold;
+     font-size: 28px;
+     padding-left: 20px;
+
+   }
+
+   /*主內容標題下分隔線*/
+   .mainTitlehr {
+     border: 2px solid lightcoral;
+
+
+   }
+   /*主內容*/
+   .main{ 
+     font-family: 'Noto Sans TC', sans-serif;
+     padding:20px 10px 20px 10px; 
+     float: left;
+     min-height: 100%;
+     background:rgba(255,255,255,0.95);
+     text-align: left;   
+     border-radius: 5px;
+     margin-top: 5px;
+     margin-bottom: 105px;
+     right: 5px;
+
+     
+
+
+
+
+   }
+
+
+   /*歡迎畫面文字*/
+   .main h1{
+    margin-top: 40px; 
+    text-align: center;
+    font-size: 60px;    
+    font-family: 'Arial Black';
+  }
+
+
+  /*表格樣式*/
+  table { 
+   width: 90%;
+   background-color: white;
+   margin-top: 5px;
+   margin-bottom: 5px;
+
+
+ }
+ table, th, td {
+   border: 1px solid #CCCCFF;
+   border-left: 0px;
+   border-right: 0px;
+   text-align: center;
+ }
+
+ th{
+   padding: 5px;
+   background-color: lightcoral;
+
+
+ }
+
+ th, td {
+   padding: 5px;
+
+ }
+
+ /*頁尾*/
+ footer{ 
+   float: left;
+   height:100px;
+   width: 100%;
+   background-color: #494646;
+   color: grey;
+   text-align: center;
+   padding-top:40px;
+   position: absolute;
+   bottom: 0;
+
+ }
+
+ /*以下為RWD配置*/
+
+ @media (max-width: 1700px){
+
+
+   div.aside{
+    white-space: nowrap;
+
+
+  }
+}
+
+
+@media (max-width: 1200px){
+
+ div.aside{
+
+  background-color: #696161;
+
+
+}
+
+}
+
+
+@media (max-width: 661px){
+
+
+ .navbarTitle{
+  display: none;
+
+}
+
+
+}
